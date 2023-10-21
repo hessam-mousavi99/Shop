@@ -12,9 +12,6 @@ namespace Shop.Persistence.Context
         #endregion
 
 
-
-
-
         #region Config Relations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

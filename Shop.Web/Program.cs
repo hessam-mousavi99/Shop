@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Application;
 using Shop.Infrastructure;
 using Shop.Persistence.Context;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -47,6 +48,7 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 
 #endregion
 
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

@@ -38,12 +38,11 @@ namespace Shop.Web.Controllers
                 switch (response)
                 {
                     case RegisterUserResult.MobileExists:
-                        TempData[ErrorMessage] = "";
+                        TempData[ErrorMessage] = "شماره تلفن وارد شده در سیستم از قبل موجود است!!!";
                         break;
                     case RegisterUserResult.Success:
-
-                        break;
-
+                        TempData[SuccessMessage] = "ثبت نام با موفقیت انجام شد.";
+                        return Redirect("/");
                 }
 
             }
