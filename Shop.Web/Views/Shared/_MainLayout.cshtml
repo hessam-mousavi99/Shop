@@ -1,0 +1,32 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <title>@ViewData["Title"]</title>
+    <partial name="_HeaderPartial" />
+    <partial name="_MetaTagHeader" />
+    <!-- Favicon -->
+    @RenderSection("Styles",false)
+</head>
+
+<body>
+    <div class="page-wrapper">
+        @await Component.InvokeAsync("SiteHeader")
+
+        <main class="main">
+           @RenderBody()
+        </main><!-- End .main -->
+
+        @await Component.InvokeAsync("SiteFooter")
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <partial name="_Mobile" />
+
+    <partial name="_JsPartials" />
+    @RenderSection("Scripts",false)
+    <partial name="_Message" />
+</body>
+
+</html>

@@ -3,13 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Win32;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
 using Shop.Application.Features.Account.Users.Requests.Queries;
 using Shop.Web.VM.Account;
 using System.Security.Claims;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Shop.Web.Controllers
 {
@@ -40,7 +38,7 @@ namespace Shop.Web.Controllers
                 switch (response)
                 {
                     case RegisterUserResult.MobileExists:
-
+                        TempData[ErrorMessage] = "";
                         break;
                     case RegisterUserResult.Success:
 
