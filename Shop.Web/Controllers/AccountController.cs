@@ -21,6 +21,8 @@ namespace Shop.Web.Controllers
             _mediator = mediator;
             _mapper = mapper;
         }
+
+        #region Register
         [HttpGet("register")]
         public IActionResult Register()
         {
@@ -49,6 +51,9 @@ namespace Shop.Web.Controllers
             return View(register);
         }
 
+        #endregion
+
+        #region Login
         [HttpGet("login")]
         public IActionResult Login()
         {
@@ -66,13 +71,17 @@ namespace Shop.Web.Controllers
                 var response = await _mediator.Send(command);
                 switch (response)
                 {
-                    case LoginUserResult.Success:
+                    case LoginUserResult.NotFound:
+                        TempData[WarningMessage] = "کاربری یافت نشد.";
                         break;
                     case LoginUserResult.NotActive:
+                        TempData[ErrorMessage] = "حساب کاربری شما فعال نمیباشد.";
                         break;
                     case LoginUserResult.IsBlocked:
+                        TempData[WarningMessage] = "حساب کاربری شما مسدود است.";
+                        TempData[InfoMessage] = "جهت اطلاعات بیشتر به قسمت تماس با ما مراجعه کنید.";
                         break;
-                    case LoginUserResult.NotFound:
+                    case LoginUserResult.Success:
                         var user = await _mediator.Send(new GetUserByPhoneNumRequest { PhoneNumber = loginUser.PhoneNumber });
                         var claim = new List<Claim>()
                         {
@@ -86,13 +95,24 @@ namespace Shop.Web.Controllers
                             IsPersistent = loginUser.RememberMe
                         };
                         await HttpContext.SignInAsync(principal, properties);
+                        TempData[SuccessMessage] = "ورود شما با موفقیت انجام شد.";
                         return RedirectToAction("Index", "Home");
                         break;
 
                 }
-
             }
             return View(login);
         }
+        #endregion
+
+        #region Logout
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            TempData[ErrorMessage] = "شما با موفقیت خارج شدید.";
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
     }
 }

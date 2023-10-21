@@ -4,9 +4,8 @@
             <div class="header-left">
                 <ul class="top-menu top-link-menu d-none d-md-block">
                     <li>
-                        <a href="#">لینک ها</a>
                         <ul>
-                            <li><a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 02155667788</a></li>
+                            <li><a href=""><i class="icon-phone"></i>تلفن تماس : 09118898014</a></li>
                         </ul>
                     </li>
                 </ul><!-- End .top-menu -->
@@ -14,50 +13,37 @@
 
             <div class="header-right">
                 <div class="social-icons social-icons-color">
-                    <a href="#" class="social-icon social-facebook" title="فیسبوک" target="_blank">
-                        <i class="icon-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-icon social-twitter" title="توییتر" target="_blank">
-                        <i class="icon-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon social-pinterest" title="اینستاگرام" target="_blank">
+                    <a href="/" class="social-icon social-instagram" title="اینستاگرام" target="_blank">
                         <i class="icon-pinterest-p"></i>
-                    </a>
-                    <a href="#" class="social-icon social-instagram" title="پینترست" target="_blank">
-                        <i class="icon-instagram"></i>
                     </a>
                 </div><!-- End .soial-icons -->
                 <ul class="top-menu top-link-menu">
                     <li>
-                        <a href="#">لینک ها</a>
-                        <ul>
-                            <li>
-                                <a asp-action="Register" asp-controller="Account" data-toggle="modal"><i class="icon-user"></i>ورود</a>
-                            </li>
-                        </ul>
+                       @if (User.Identity.IsAuthenticated)
+                        {
+                            <ul>
+                                <li>
+                                    <a href=""><i class="icon-user"></i>پروفایل @User.Identity.Name</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Logout"><i class="icon-user"></i>خروج</a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Register"><i class="icon-user"></i>ثبت نام</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Login"><i class="icon-user"></i>ورود</a>
+                                </li>
+                            </ul>
+                        }
                     </li>
                 </ul><!-- End .top-menu -->
-
-                <div class="header-dropdown">
-                    <a href="#">تومان</a>
-                    <div class="header-menu">
-                        <ul>
-                            <li><a href="#">دلار</a></li>
-                            <li><a href="#">تومان</a></li>
-                        </ul>
-                    </div><!-- End .header-menu -->
-                </div><!-- End .header-dropdown -->
-
-                <div class="header-dropdown">
-                    <a href="#">فارسی</a>
-                    <div class="header-menu">
-                        <ul>
-                            <li><a href="#">انگلیسی</a></li>
-                            <li><a href="#">فرانسوی</a></li>
-                            <li><a href="#">ترکی استانبولی</a></li>
-                        </ul>
-                    </div><!-- End .header-menu -->
-                </div><!-- End .header-dropdown -->
+              
             </div><!-- End .header-right -->
         </div>
     </div>
