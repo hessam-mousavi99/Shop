@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Persistence.Context;
 
@@ -12,8 +13,19 @@ builder.Services.AddDbContext<ShopDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ShopConnStr"));
 });
 #endregion
-
-
+#region Auth
+builder.Services.AddAuthentication(options =>
+{ 
+    options.DefaultAuthenticateScheme=CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.LoginPath = "/login";
+    options.LogoutPath = "/logout";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+});
+#endregion
 
 var app = builder.Build();
 
