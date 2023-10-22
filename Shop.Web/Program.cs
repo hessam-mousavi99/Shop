@@ -1,6 +1,7 @@
 using GoogleReCaptcha.V3;
 using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Shop.Application;
 using Shop.Infrastructure;
@@ -78,9 +79,22 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+      );
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+//app.UseEndpoints(configure: endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//      name: "areas",
+//      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+//    endpoints.MapControllerRoute(
+//      name: "default",
+//      pattern: "{controller=Home}/{action=Index}/{id?}");
+//});
 app.Run();
 #endregion
 

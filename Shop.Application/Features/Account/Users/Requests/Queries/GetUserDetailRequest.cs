@@ -10,6 +10,6 @@ namespace Shop.Application.Features.Account.Users.Requests.Queries
 {
     public class GetUserDetailRequest:IRequest<UserDto>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

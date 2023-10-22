@@ -1,7 +1,5 @@
-﻿using Shop.Application.DTOs.Accounts;
-using Shop.Domain.Models.Account;
-
-namespace Shop.Application.Extentions
+﻿using Shop.Domain.Models.Account;
+namespace Shop.Infrastructure.Extentions
 {
     public static class UserExtentions
     {
