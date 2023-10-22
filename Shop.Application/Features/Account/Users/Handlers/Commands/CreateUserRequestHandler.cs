@@ -18,12 +18,15 @@ namespace Shop.Application.Features.Account.Users.Handlers.Commands
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IPasswordHelper _passwordHelper;
+        private readonly ISmsService _smsService;
 
-        public CreateUserRequestHandler(IUserRepository userRepository, IMapper mapper,IPasswordHelper passwordHelper)
+        public CreateUserRequestHandler(IUserRepository userRepository, IMapper mapper,IPasswordHelper passwordHelper,ISmsService smsService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordHelper = passwordHelper;
+            _smsService = smsService;
+            
         }
         public async Task<RegisterUserResult> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
@@ -33,6 +36,9 @@ namespace Shop.Application.Features.Account.Users.Handlers.Commands
                 user.Password = _passwordHelper.EncodePasswordMd5(request.CreateUserDto.Password);
                 await _userRepository.AddAsync(user);
                 await _userRepository.SaveChangesAsync();
+
+                await _smsService.SendVerificationCodeAsync(user.PhoneNumber, user.ActiveCode);
+
                 return RegisterUserResult.Success;
             }
             else

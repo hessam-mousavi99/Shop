@@ -31,5 +31,10 @@ namespace Shop.Persistence.Repositories.Accounts
         {
           await _context.SaveChangesAsync();
         }
+
+        public Task<ActiveAccountResult> ActiveAccountAsync(ActiveAccountDto activeAccountDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

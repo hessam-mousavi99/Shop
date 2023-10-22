@@ -1,11 +1,11 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace Shop.Web.VM.Site
+namespace Shop.Web.Models.VM.Site
 {
     public class Recaptcha
     {
         [Required()]
-        public string Token { get; set; }=string.Empty;
+        public string Token { get; set; } = string.Empty;
     }
 }

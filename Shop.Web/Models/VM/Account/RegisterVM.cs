@@ -1,9 +1,9 @@
-﻿using Shop.Web.VM.Site;
+﻿using Shop.Web.Models.VM.Site;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shop.Web.VM.Account
+namespace Shop.Web.Models.VM.Account
 {
-    public class RegisterVM:Recaptcha
+    public class RegisterVM : Recaptcha
     {
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

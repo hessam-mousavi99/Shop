@@ -1,21 +1,19 @@
-﻿using Shop.Web.VM.Site;
+﻿using Shop.Web.Models.VM.Site;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shop.Web.VM.Account
+namespace Shop.Web.Models.VM.Account
 {
-    public class LoginVm:Recaptcha
+    public class ActiveAccountVM:Recaptcha
     {
+
         [Display(Name = "شماره تلفن همراه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        [Display(Name = "گذرواژه")]
+        [Display(Name = "کد احرازهویت")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string Password { get; set; } = string.Empty;
-
-        [Display(Name = "مرا بخاطر بسپار")]
-        public bool RememberMe { get; set; }
+        [MaxLength(20, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string ActiveCode { get; set; }
     }
 }

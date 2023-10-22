@@ -1,13 +1,6 @@
 ﻿using Shop.Application.DTOs.BaseDto;
 using Shop.Domain.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Mail;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.DTOs.Accounts
 {
@@ -36,7 +29,7 @@ namespace Shop.Application.DTOs.Accounts
         [Display(Name = "آواتار")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string Avatar { get; set; } = "/Images/AvatarImage/Default.jpg";
+        public string Avatar { get; set; } = "Default.jpg";
 
         [Display(Name = "جنسیت")]
         public UserGender Gender { get; set; }= UserGender.None;

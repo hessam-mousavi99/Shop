@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Shop.Application.DTOs.Accounts;
-using Shop.Domain.Models.Account;
-using Shop.Web.VM.Account;
+using Shop.Web.Models.VM.Account;
 
 namespace Shop.Web.Profiles
 {
@@ -13,6 +12,7 @@ namespace Shop.Web.Profiles
 
             CreateMap<CreateUserDto, RegisterVM>().ReverseMap();
             CreateMap<LoginDto, LoginVm>().ReverseMap();
+            CreateMap<ActiveAccountDto, ActiveAccountVM>().ReverseMap();
            
             #endregion
         }

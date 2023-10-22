@@ -1,4 +1,12 @@
-﻿<header class="header header-6">
+﻿
+@using Shop.Application.DTOs.Accounts;
+@using Shop.Application.Extentions
+@using Shop.Domain.Models.Account;
+@{
+    var user =(User)ViewBag.User;
+}
+
+<header class="header header-6">
     <div class="header-top">
         <div class="container">
             <div class="header-left">
@@ -14,7 +22,10 @@
             <div class="header-right">
                 <div class="social-icons social-icons-color">
                     <a href="/" class="social-icon social-instagram" title="اینستاگرام" target="_blank">
-                        <i class="icon-pinterest-p"></i>
+                        <i class="icon-instagram"></i>
+                    </a>
+                    <a href="/" class="social-icon social-telegram" title="تلگرام" target="_blank">
+                        <i class="icon-telegram"></i>
                     </a>
                 </div><!-- End .soial-icons -->
                 <ul class="top-menu top-link-menu">
@@ -23,7 +34,7 @@
                         {
                             <ul>
                                 <li>
-                                    <a href=""><i class="icon-user"></i>پروفایل @User.Identity.Name</a>
+                                    <a href=""><i class="icon-user"></i>@user.GetUserName()</a>
                                 </li>
                                 <li>
                                     <a asp-controller="Account" asp-action="Logout"><i class="icon-user"></i>خروج</a>

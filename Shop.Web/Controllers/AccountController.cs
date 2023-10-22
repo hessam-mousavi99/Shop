@@ -4,11 +4,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Win32;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
 using Shop.Application.Features.Account.Users.Requests.Queries;
-using Shop.Web.VM.Account;
+using Shop.Web.Models.VM.Account;
 using System.Security.Claims;
 
 namespace Shop.Web.Controllers
@@ -54,7 +53,7 @@ namespace Shop.Web.Controllers
                         break;
                     case RegisterUserResult.Success:
                         TempData[SuccessMessage] = "ثبت نام با موفقیت انجام شد.";
-                        return Redirect("/");
+                        return RedirectToAction("ActiveAccount","Account", new {mobile=register.PhoneNumber});
                 }
 
             }
@@ -127,6 +126,49 @@ namespace Shop.Web.Controllers
             TempData[ErrorMessage] = "شما با موفقیت خارج شدید.";
             return RedirectToAction("Index", "Home");
         }
+        #endregion
+
+        #region Activate Account
+        [HttpGet("activate-account/{mobile}")]
+        public async Task<IActionResult> ActiveAccount(string mobile)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
+            var activeAccount = new ActiveAccountVM { PhoneNumber = mobile };
+            return View(activeAccount);
+        }
+        [HttpPost("activate-account/{mobile}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActiveAccount(ActiveAccountVM activeAccount)
+        {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(activeAccount.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما معتبر نمیباشد";
+                return View(activeAccount);
+            }
+            var activeUser = _mapper.Map<ActiveAccountDto>(activeAccount);
+            if (ModelState.IsValid)
+            {
+                var command = new ActiveAccountCommandRequest { activeAccountDto = activeUser };
+                var response = await _mediator.Send(command);
+                switch (response)
+                {
+                    case ActiveAccountResult.Error:
+                        TempData[ErrorMessage] = "عملیات فعال کردن حساب کاربری با شکست مواجه شد";
+                        break;
+                    case ActiveAccountResult.NotFound:
+                        TempData[WarningMessage] = "کاربری با مشخصات وارد شده یافت نشد";
+                        break;
+                    case ActiveAccountResult.Success:
+                        TempData[SuccessMessage] = "حساب کاربری شما با موفقیت فعال شد";
+                        TempData[InfoMessage] = "لظفا جهت ادامه فرایند وارد حساب کاربری خود شوید";
+                        return RedirectToAction("Login");
+                }
+            }
+            return View(activeAccount);
+        }
+
         #endregion
     }
 }
