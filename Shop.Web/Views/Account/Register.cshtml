@@ -6,6 +6,7 @@
 
 @section scripts{
     <partial name="_ValidationScripts" />
+    <partial name="_CaptchaScripts" />
 }
 
 
@@ -26,7 +27,7 @@
             <div class="form-tab">
                 <div class="tab-content">
                     <form asp-controller="Account" asp-action="Register" method="post">
-                       @*  <partial name="_CaptchaInput" /> *@
+                       <partial name="_CaptchaInput" /> 
                         <div class="form-group">
                             <label for="singin-email-2">شماره تلفن</label>
                             <input type="text" asp-for="PhoneNumber" class="form-control">

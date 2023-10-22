@@ -1,3 +1,5 @@
+using GoogleReCaptcha.V3;
+using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Application;
@@ -48,7 +50,13 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 
 #endregion
 
+#region Config Captcha
+builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
+#endregion
+
+#region Config Profile
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+#endregion
 
 var app = builder.Build();
 

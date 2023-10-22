@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using GoogleReCaptcha.V3.Interface;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
 using Shop.Application.Features.Account.Users.Requests.Queries;
@@ -15,11 +17,13 @@ namespace Shop.Web.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-
-        public AccountController(IMediator mediator, IMapper mapper)
+        private readonly ICaptchaValidator _captchaValidator;
+    
+        public AccountController(IMediator mediator, IMapper mapper,ICaptchaValidator captchaValidator)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _captchaValidator = captchaValidator;
         }
 
         #region Register
@@ -32,6 +36,12 @@ namespace Shop.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM register)
         {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(register.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچا معتبر نیست";
+                return View(register);
+            }
+
             var registerUser = _mapper.Map<CreateUserDto>(register);
             if (ModelState.IsValid)
             {
@@ -64,6 +74,12 @@ namespace Shop.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVm login)
         {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(login.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچا معتبر نیست";
+                return View(login);
+            }
+
             var loginUser = _mapper.Map<LoginDto>(login);
             if (ModelState.IsValid)
             {
@@ -97,8 +113,6 @@ namespace Shop.Web.Controllers
                         await HttpContext.SignInAsync(principal, properties);
                         TempData[SuccessMessage] = "ورود شما با موفقیت انجام شد.";
                         return RedirectToAction("Index", "Home");
-                        break;
-
                 }
             }
             return View(login);

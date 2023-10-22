@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shop.Web.VM.Site;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Web.VM.Account
 {
-    public class LoginVm
+    public class LoginVm:Recaptcha
     {
         [Display(Name = "شماره تلفن همراه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
