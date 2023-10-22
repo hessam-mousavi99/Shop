@@ -1,13 +1,9 @@
 ﻿@model User
-@* @using Shop.Application.Utils *@
-@using Shop.Domain.Models.Account;
-@using Shop.Infrastructure.Extentions
-
 
 <form>
     <div class="box-shadow info-image-user mb-3">
         <div class="p-3">
-           @*  <img class="img-thumbnail  box-shadow img-account" src="@(PathExtensions.UserAvatarOrgin +Model.Avatar)"> *@
+           <img class="img-thumbnail  box-shadow img-account" src="@(PathExtensions.UserAvatarOrgin + Model.Avatar)"> 
         </div>
         <div class="text-center p-1">
             <p class="text-center">@Model.GetUserName()</p>

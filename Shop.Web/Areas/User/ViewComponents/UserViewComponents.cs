@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Features.Account.Users.Requests.Queries;
-using Shop.Infrastructure.Extentions;
+using Shop.Application.Extentions;
 namespace Shop.Web.Areas.User.ViewComponents;
 
 public class UserSideBarViewComponent : ViewComponent

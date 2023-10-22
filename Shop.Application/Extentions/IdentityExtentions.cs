@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Shop.Infrastructure.Extentions
+namespace Shop.Application.Extentions
 {
     public static class IdentityExtentions
     {

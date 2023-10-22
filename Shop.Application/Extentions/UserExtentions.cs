@@ -1,5 +1,5 @@
 ﻿using Shop.Domain.Models.Account;
-namespace Shop.Infrastructure.Extentions
+namespace Shop.Application.Extentions
 {
     public static class UserExtentions
     {

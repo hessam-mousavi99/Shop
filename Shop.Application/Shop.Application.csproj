@@ -10,8 +10,12 @@
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 		<PackageReference Include="KavenegarDotNetCore" Version="1.0.7" />
+		<PackageReference Include="LazZiya.ImageResize" Version="4.1.4" />
 		<PackageReference Include="MediatR" Version="11.1.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+		<PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
