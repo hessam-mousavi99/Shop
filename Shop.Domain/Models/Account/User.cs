@@ -1,5 +1,6 @@
 ﻿using Shop.Domain.Enums;
 using Shop.Domain.Models.BaseEntities;
+using Shop.Domain.Models.Wallet;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Domain.Models.Account
@@ -40,7 +41,7 @@ namespace Shop.Domain.Models.Account
         #endregion
 
         #region Relations
-
+        public ICollection<UserWallet>? UserWallets { get; set; }
         #endregion
     }
 }

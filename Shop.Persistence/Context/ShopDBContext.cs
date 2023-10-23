@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.Wallet;
 
 namespace Shop.Persistence.Context
 {
@@ -9,6 +10,9 @@ namespace Shop.Persistence.Context
 
         #region User
         public DbSet<User> Users { get; set; }
+        #endregion
+        #region Wallet
+        public DbSet<UserWallet> Wallets { get; set; }
         #endregion
 
 

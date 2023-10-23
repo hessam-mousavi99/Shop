@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
-using Shop.Application.DTOs.Accounts;
-using Shop.Domain.Enums;
 using Shop.Domain.Models.Account;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Generics;
-using System.Reflection.Metadata;
 
 namespace Shop.Persistence.Repositories.Accounts
 {

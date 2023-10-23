@@ -47,4 +47,11 @@ namespace Shop.Domain.Enums
         Error,
         Suceess
     }
+    public enum WalletType
+    {
+        [Display(Name = "واریز")]
+        Variz = 1,
+        [Display(Name = "برداشت")]
+        Bardasht = 2
+    }
 }

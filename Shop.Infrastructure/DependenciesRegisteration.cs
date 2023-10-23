@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shop.Application.Contracts.Infrastructure.IServices;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
+using Shop.Application.Contracts.Persistence.IRepositories.IWallets;
 using Shop.Infrastructure.Services;
 using Shop.Persistence.Repositories.Accounts;
+using Shop.Persistence.Repositories.Wallets;
 
 namespace Shop.Infrastructure
 {
@@ -17,6 +19,7 @@ namespace Shop.Infrastructure
 
             #region Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
             #endregion
         }
     }

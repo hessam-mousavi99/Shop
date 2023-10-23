@@ -1,5 +1,4 @@
 ﻿using Shop.Application.Contracts.Persistence.IRepositories.IGenerics;
-using Shop.Application.DTOs.Accounts;
 using Shop.Domain.Models.Account;
 
 namespace Shop.Application.Contracts.Persistence.IRepositories.IAccounts
