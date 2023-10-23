@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
+using Shop.Application.DTOs.Admin.Account;
+using Shop.Application.Utils.Paging;
 using Shop.Domain.Models.Account;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Generics;
+using System.Web.Mvc;
 
 namespace Shop.Persistence.Repositories.Accounts
 {
@@ -29,6 +32,25 @@ namespace Shop.Persistence.Repositories.Accounts
         public async Task SaveChangesAsync()
         {
           await _context.SaveChangesAsync();
+        }
+
+        public async Task<FilterUserDto> FilterUserAsync(FilterUserDto filterUserDto)
+        {
+            var query = _context.Users.AsQueryable();
+            #region Filter
+            if (!string.IsNullOrEmpty(filterUserDto.PhoneNumber))
+            {
+                query = query.Where(u=>u.PhoneNumber == filterUserDto.PhoneNumber);
+            }
+            #endregion
+
+            #region Paging
+            var pager = Pager.Build(filterUserDto.PageId, await query.CountAsync(),
+                filterUserDto.TakeEntity, filterUserDto.CountForShowAfterAndBefor);
+            var allData = await query.Paging(pager).ToListAsync();
+            #endregion
+
+            return filterUserDto.SetPaging(pager).SetUsers(allData);
         }
     }
 }

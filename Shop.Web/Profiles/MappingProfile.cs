@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Shop.Application.DTOs.Accounts;
+using Shop.Application.DTOs.Admin.Account;
 using Shop.Application.DTOs.Wallet;
 using Shop.Web.Models.VM.Account;
+using Shop.Web.Models.VM.Admin.Account;
 using Shop.Web.Models.VM.Wallet;
 
 namespace Shop.Web.Profiles
@@ -26,7 +28,13 @@ namespace Shop.Web.Profiles
             CreateMap<ChargeWalletDto, ChargeWalletVM>().ReverseMap();
             CreateMap<WalletDto, WalletVM>().ReverseMap();
             CreateMap<FilterWalletDto, FilterWalletVM>().ReverseMap();
-            
+
+            #endregion
+
+            #region Admin
+
+            CreateMap<FilterUserDto, FilterUserVM>().ReverseMap();
+
             #endregion
         }
     }
