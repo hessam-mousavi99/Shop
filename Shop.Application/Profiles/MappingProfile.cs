@@ -14,6 +14,7 @@ namespace Shop.Application.Profiles
             CreateMap<User, LoginDto>().ReverseMap();
             CreateMap<User, ActiveAccountDto>().ReverseMap();
             CreateMap<User, EditUserProfileDto>().ReverseMap();
+            CreateMap<User, ChangePasswordDto>().ReverseMap();
             #endregion
         }
     }

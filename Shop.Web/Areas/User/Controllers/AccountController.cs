@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.Extentions;
@@ -53,6 +54,41 @@ namespace Shop.Web.Areas.User.Controllers
                 }
             }
             return View(editUserProfileVM);
+        }
+        #endregion
+
+        #region Change Password
+        [HttpGet("change-password")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost("change-password")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var changePassMap = _mapper.Map<ChangePasswordDto>(changePasswordVM);
+            if (ModelState.IsValid)
+            {
+                var command = new ChangePasswordCommandRequest() { Id = User.GetUserId(), ChangePasswordDto = changePassMap };
+                var response=await _mediator.Send(command);
+                switch (response)
+                {
+                    case ChangePasswordResult.NotFound:
+                        TempData[WarningMessage] = "کاربری با مشخصات وارد شده یافت نشد";
+                        break;
+                    case ChangePasswordResult.PasswordEqual:
+                        TempData[InfoMessage] = "لطفا از کلمه عبور جدیدی استفاده کنید";
+                        ModelState.AddModelError("NewPassword", "لطفا از کلمه عبور جدیدی استفاده کنید");
+                        break;
+                    case ChangePasswordResult.Success:
+                        TempData[SuccessMessage] = "کلمه ی عبور شما با موفقیت تغیر یافت";
+                        TempData[InfoMessage] = "لطفا جهت تکمیل فراید تغیر کلمه ی عبور ،مجددا وارد سایت شود";
+                        await HttpContext.SignOutAsync();
+                        return RedirectToAction("Login", "Account", new { area = "" });
+                }
+            }
+            return View(changePasswordVM);
         }
         #endregion
 
