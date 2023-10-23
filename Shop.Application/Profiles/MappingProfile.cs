@@ -6,19 +6,28 @@ using Shop.Domain.Models.Wallet;
 
 namespace Shop.Application.Profiles
 {
-    public class MappingProfile:Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
             #region User Mapping
+
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, LoginDto>().ReverseMap();
             CreateMap<User, ActiveAccountDto>().ReverseMap();
             CreateMap<User, EditUserProfileDto>().ReverseMap();
             CreateMap<User, ChangePasswordDto>().ReverseMap();
-            CreateMap<UserWallet, ChargeWalletDto>().ReverseMap();
+
             #endregion
+
+            #region Wallet Mapping
+
+            CreateMap<UserWallet, ChargeWalletDto>().ReverseMap();
+            CreateMap<UserWallet, WalletDto>().ReverseMap();
+
+            #endregion
+
         }
     }
 }

@@ -21,7 +21,8 @@ namespace Shop.Persistence.Repositories.Accounts
         }
         public async Task<User> GetUserbyPhoneNumberAsync(string phonenumber)
         {
-            return await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.PhoneNumber == phonenumber);
+            var user= await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.PhoneNumber == phonenumber);
+            return user; 
         }
         
 

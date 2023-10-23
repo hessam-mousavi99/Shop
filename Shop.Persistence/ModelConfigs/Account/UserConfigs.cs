@@ -9,7 +9,7 @@ namespace Shop.Persistence.ModelConfigs.Account
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasQueryFilter(x => x.IsDelete != false);
+            builder.HasQueryFilter(x => x.IsDelete == false);
             builder.HasMany<UserWallet>(g => g.UserWallets).WithOne(s => s.User).HasForeignKey(s => s.UserId);
         }
     }
