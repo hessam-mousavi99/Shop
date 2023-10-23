@@ -2,14 +2,9 @@
 using MediatR;
 using Shop.Application.Contracts.Infrastructure.IServices;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
-using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
+using Shop.Domain.Enums;
 using Shop.Domain.Models.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Features.Account.Users.Handlers.Commands
 {

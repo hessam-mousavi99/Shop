@@ -44,9 +44,5 @@ namespace Shop.Application.DTOs.Accounts
         [Display(Name = "تایید شده / نشده")]
         public bool IsActive { get; set; } = false;
     }
-    public enum RegisterUserResult
-    {
-        MobileExists,
-        Success
-    }
+    
 }

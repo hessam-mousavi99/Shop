@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
 using Shop.Application.Features.Account.Users.Requests.Queries;
+using Shop.Domain.Enums;
 using Shop.Web.Models.VM.Account;
 using System.Security.Claims;
 

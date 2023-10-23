@@ -22,11 +22,5 @@ namespace Shop.Application.DTOs.Accounts
         [Display(Name = "مرا بخاطر بسپار")]
         public bool RememberMe { get; set; }
     }
-    public enum LoginUserResult
-    {
-        NotFound,
-        NotActive,
-        Success,
-        IsBlocked
-    }
+    
 }

@@ -1,14 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
-using Shop.Application.Contracts.Infrastructure.IServices;
+﻿using MediatR;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
-using Shop.Application.DTOs.Accounts;
 using Shop.Application.Features.Account.Users.Requests.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shop.Domain.Enums;
 
 namespace Shop.Application.Features.Account.Users.Handlers.Commands
 {

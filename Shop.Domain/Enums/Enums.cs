@@ -11,4 +11,40 @@ namespace Shop.Domain.Enums
         [Display(Name = "نامشخص")]
         None 
     }
+    public enum EditUserProfileResult
+    {
+        NotFound,
+        Success
+    }
+    public enum ActiveAccountResult
+    {
+        Error,
+        Success,
+        NotFound
+    }
+    public enum RegisterUserResult
+    {
+        MobileExists,
+        Success
+    }
+    public enum LoginUserResult
+    {
+        NotFound,
+        NotActive,
+        Success,
+        IsBlocked
+    }
+    public enum ChangePasswordResult
+    {
+        NotFound,
+        PasswordEqual,
+        Success
+    }
+    public enum FinallyOrderResult
+    {
+        HasNotUser,
+        NotFound,
+        Error,
+        Suceess
+    }
 }

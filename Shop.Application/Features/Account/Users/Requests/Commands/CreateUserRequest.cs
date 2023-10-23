@@ -1,10 +1,6 @@
 ﻿using MediatR;
 using Shop.Application.DTOs.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shop.Domain.Enums;
 
 namespace Shop.Application.Features.Account.Users.Requests.Commands
 {

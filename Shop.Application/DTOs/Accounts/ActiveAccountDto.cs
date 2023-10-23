@@ -14,10 +14,4 @@ namespace Shop.Application.DTOs.Accounts
         [MaxLength(20, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string ActiveCode { get; set; }
     }
-    public enum ActiveAccountResult
-    {
-        Error,
-        Success,
-        NotFound
-    }
 }

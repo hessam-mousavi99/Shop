@@ -9,6 +9,5 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IAccounts
         Task<bool> IsUserExistsbyPhonenumberAsync(string phoneNumber);
         Task SaveChangesAsync();
         Task<User> GetUserbyPhoneNumberAsync(string phonenumber);
-        Task<ActiveAccountResult> ActiveAccountAsync(ActiveAccountDto activeAccountDto);
     }
 }
