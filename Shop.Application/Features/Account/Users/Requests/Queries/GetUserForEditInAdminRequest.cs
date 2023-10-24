@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Shop.Application.DTOs.Accounts;
+using Shop.Application.DTOs.Admin.Account;
 
 namespace Shop.Application.Features.Account.Users.Requests.Queries
 {
-    public class GetUserDetailRequest:IRequest<UserDto>
+    public class GetUserForEditInAdminRequest:IRequest<EditUserFromAdminDto>
     {
         public long Id { get; set; }
     }

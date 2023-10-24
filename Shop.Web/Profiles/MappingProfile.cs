@@ -34,6 +34,9 @@ namespace Shop.Web.Profiles
             #region Admin
 
             CreateMap<FilterUserDto, FilterUserVM>().ReverseMap();
+            CreateMap<FilterRolesDto, FilterRolesVM>().ReverseMap();
+            CreateMap<EditUserFromAdminDto, EditUserFromAdminVM>().ReverseMap();
+            CreateMap<CreateOrEditRoleDto, CreateOrEditRoleVM>().ReverseMap();
 
             #endregion
         }

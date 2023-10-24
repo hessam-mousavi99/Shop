@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shop.Application.DTOs.Accounts;
+using Shop.Application.DTOs.Admin.Account;
 using Shop.Application.DTOs.Wallet;
 using Shop.Domain.Models.Account;
 using Shop.Domain.Models.Wallet;
@@ -16,7 +17,7 @@ namespace Shop.Application.Profiles
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, LoginDto>().ReverseMap();
             CreateMap<User, ActiveAccountDto>().ReverseMap();
-            CreateMap<User, EditUserProfileDto>().ReverseMap();
+            CreateMap<User, EditUserProfileDto>().ReverseMap();         
             CreateMap<User, ChangePasswordDto>().ReverseMap();
 
             #endregion
@@ -25,9 +26,15 @@ namespace Shop.Application.Profiles
 
             CreateMap<UserWallet, ChargeWalletDto>().ReverseMap();
             CreateMap<UserWallet, WalletDto>().ReverseMap();
+            CreateMap<User, EditUserFromAdminDto>().ReverseMap();
 
             #endregion
 
+            #region Role Mapping
+
+            CreateMap<Role, CreateOrEditRoleDto>().ReverseMap();
+
+            #endregion
         }
     }
 }
