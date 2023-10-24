@@ -131,7 +131,7 @@ namespace Shop.Web.Controllers
 
         #region Activate Account
         [HttpGet("activate-account/{mobile}")]
-        public async Task<IActionResult> ActiveAccount(string mobile)
+        public IActionResult ActiveAccount(string mobile)
         {
             if (User.Identity.IsAuthenticated)
             {

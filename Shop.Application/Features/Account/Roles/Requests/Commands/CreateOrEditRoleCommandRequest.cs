@@ -6,6 +6,6 @@ namespace Shop.Application.Features.Account.Roles.Requests.Commands
 {
     public class CreateOrEditRoleCommandRequest:IRequest<CreateOrEditRoleResult>
     {
-        public CreateOrEditRoleDto CreateOrEditRoleDto { get; set; }
+        public CreateOrEditRoleDto? CreateOrEditRoleDto { get; set; }
     }
 }

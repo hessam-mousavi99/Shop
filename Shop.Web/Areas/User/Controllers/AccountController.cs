@@ -101,7 +101,7 @@ namespace Shop.Web.Areas.User.Controllers
 
         #region Charge Wallet
         [HttpGet("charge-wallet")]
-        public async Task<IActionResult> ChargeWallet()
+        public IActionResult ChargeWallet()
         {
             return View();
         }

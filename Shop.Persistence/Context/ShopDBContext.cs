@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Wallet;
 
 namespace Shop.Persistence.Context
@@ -15,8 +16,17 @@ namespace Shop.Persistence.Context
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         #endregion
+
         #region Wallet
         public DbSet<UserWallet> Wallets { get; set; }
+        #endregion
+
+        #region Product
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductFeature> ProductFeatures { get; set; }
+        public DbSet<ProductGallery> ProductGalleries { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

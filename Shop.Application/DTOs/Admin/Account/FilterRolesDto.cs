@@ -5,8 +5,8 @@ namespace Shop.Application.DTOs.Admin.Account
 {
     public class FilterRolesDto:BasePaging
     {
-        public string RoleName { get; set; }
-        public List<Role> Roles { get; set; }
+        public string RoleName { get; set; } = string.Empty;
+        public List<Role>? Roles { get; set; }
 
         #region methods
         public FilterRolesDto SetRoles(List<Role> roles)

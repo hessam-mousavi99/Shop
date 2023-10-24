@@ -6,6 +6,6 @@ namespace Shop.Application.Features.Account.Users.Requests.Commands
 {
     public class EditUserFromAdminCommandRequest:IRequest<EditUserFromAdminResult>
     {
-        public EditUserFromAdminDto EditUserFromAdminDto { get; set; }
+        public EditUserFromAdminDto? EditUserFromAdminDto { get; set; }
     }
 }

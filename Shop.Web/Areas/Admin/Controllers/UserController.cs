@@ -84,7 +84,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #region create Role
         [HttpGet]
-        public async Task<IActionResult> CreateRole()
+        public IActionResult CreateRole()
         {
             return View();
         }
