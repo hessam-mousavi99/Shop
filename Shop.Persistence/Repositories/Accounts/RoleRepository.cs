@@ -36,6 +36,17 @@ namespace Shop.Persistence.Repositories.Accounts
             return filterRolesDto.SetPaging(pager).SetRoles(allData);
         }
 
+        public async Task<CreateOrEditRoleDto> GetEditRoleById(long roleId)
+        {
+            return await _context.Roles.AsQueryable().Where(c => c.Id == roleId).Include(c=>c.RolePermissions)
+                .Select(c => new CreateOrEditRoleDto()
+                {
+                    Id = roleId,
+                    RoleTitle = c.RoleTitle,
+                    SelectedPermission = c.RolePermissions.Select(c => c.PermissionId).ToList()
+                }).SingleOrDefaultAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

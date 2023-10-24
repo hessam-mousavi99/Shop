@@ -23,4 +23,9 @@
 		
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\Account\Permissions\Handlers\Commands\" />
+	  <Folder Include="Features\Account\Permissions\Requests\Commands\" />
+	</ItemGroup>
+
 </Project>

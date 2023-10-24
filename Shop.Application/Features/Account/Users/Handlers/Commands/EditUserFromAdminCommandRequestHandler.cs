@@ -12,12 +12,13 @@ namespace Shop.Application.Features.Account.Users.Handlers.Commands
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IPasswordHelper _passwordHelper;
-
-        public EditUserFromAdminCommandRequestHandler(IUserRepository userRepository,IMapper mapper,IPasswordHelper passwordHelper)
+        private readonly IUserRoleRepository _userroleRepository;
+        public EditUserFromAdminCommandRequestHandler(IUserRepository userRepository,IUserRoleRepository userRoleRepository,IMapper mapper,IPasswordHelper passwordHelper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordHelper = passwordHelper;
+            _userroleRepository = userRoleRepository;
         }
         public async Task<EditUserFromAdminResult> Handle(EditUserFromAdminCommandRequest request, CancellationToken cancellationToken)
         {
@@ -31,6 +32,8 @@ namespace Shop.Application.Features.Account.Users.Handlers.Commands
                 user.Password = _passwordHelper.EncodePasswordMd5( request.EditUserFromAdminDto.Password);
             }
             await _userRepository.UpdateAsync(user);
+            await _userroleRepository.RemoveAllUserSelectedroleAsync(request.EditUserFromAdminDto.Id);
+            await _userroleRepository.AddUserToRoleAsync(request.EditUserFromAdminDto.RoleIds, request.EditUserFromAdminDto.Id);
             await _userRepository.SaveChangesAsync();
             return EditUserFromAdminResult.Success;
         }

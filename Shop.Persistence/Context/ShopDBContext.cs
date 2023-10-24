@@ -19,7 +19,11 @@ namespace Shop.Persistence.Context
         public DbSet<UserWallet> Wallets { get; set; }
         #endregion
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
         #region Config Relations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

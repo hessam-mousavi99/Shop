@@ -46,4 +46,11 @@
     <Folder Include="wwwroot\img\userAvatar\orgin\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\admin\js\custom.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

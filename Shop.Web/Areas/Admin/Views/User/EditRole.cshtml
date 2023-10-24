@@ -1,7 +1,7 @@
 ﻿@model CreateOrEditRoleVM
 @{
     ViewData["Title"] = "ویرایش نقش";
-    //var permissions = (List<Permission>)ViewData["Permissions"];
+    var permissions = (List<Permission>)ViewData["Permissions"];
 }
 
 <form asp-area="Admin" asp-controller="User" asp-action="EditRole" method="post">
@@ -31,7 +31,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <p class="card-text">سطح دسترسی ها</p>
-                  @*   @if (permissions != null && permissions.Any())
+                   @if (permissions != null && permissions.Any())
                     {
                         @foreach (var permission in permissions.Where(c => c.ParentId == null))
                         {
@@ -55,7 +55,7 @@
                             }
                         }
                     }
- *@
+
                 </div>
             </div>
         </div>

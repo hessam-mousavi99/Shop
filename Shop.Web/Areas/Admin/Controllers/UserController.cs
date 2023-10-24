@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Admin.Account;
+using Shop.Application.Features.Account.Permissions.Requests.Queries;
 using Shop.Application.Features.Account.Roles.Requests.Commands;
 using Shop.Application.Features.Account.Roles.Requests.Queries;
 using Shop.Application.Features.Account.Users.Requests.Commands;
@@ -42,14 +43,14 @@ namespace Shop.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            //ViewData["Roles"] = await _userService.GetAllActiveRoles();
+            ViewData["Roles"] = await _mediator.Send(new GetAllRolesRequest());
             return View(_mapper.Map<EditUserFromAdminVM>(data));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserFromAdminVM editUser)
         {
-            //ViewData["Roles"] = await _userService.GetAllActiveRoles();
+            ViewData["Roles"] = await _mediator.Send(new GetAllRolesRequest());
             var mapUser = _mapper.Map<EditUserFromAdminDto>(editUser);
             
             if (ModelState.IsValid)
@@ -70,6 +71,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
 
         #endregion
+
         #region filter roles
         public async Task<IActionResult> FilterRoles(FilterRolesVM filter)
         {
@@ -100,9 +102,9 @@ namespace Shop.Web.Areas.Admin.Controllers
                 {
                     case CreateOrEditRoleResult.NotFound:
                         break;
-                    //case CreateOrEditRoleResult.NotExistPermissions:
-                    //    TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
-                    //    break;
+                    case CreateOrEditRoleResult.NotExistPermissions:
+                        TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
+                        break;
                     case CreateOrEditRoleResult.Success:
                         TempData[SuccessMessage] = "عملیات افزودن نقش با موفقیت انجام شد";
                         return RedirectToAction("FilterRoles");
@@ -112,14 +114,13 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
         #endregion
 
-
         #region Edit Role
         [HttpGet]
         public async Task<IActionResult> EditRole(long roleId)
         {
             var role = await _mediator.Send(new GetRoleRequest() { Id = roleId });
             var RoleVM = _mapper.Map<CreateOrEditRoleVM>(role);
-            //ViewData["Permissions"] = await _userService.GetAllActivePermission();
+            ViewData["Permissions"] = await _mediator.Send(new GetAllActivePermissionsRequest());
             return View(RoleVM);
         }
 
@@ -127,7 +128,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         public async Task<IActionResult> EditRole(CreateOrEditRoleVM create)
         {
             var mapRoleDto = _mapper.Map<CreateOrEditRoleDto>(create);
-            //ViewData["Permissions"] = await _userService.GetAllActivePermission();
+            ViewData["Permissions"] = await _mediator.Send(new GetAllActivePermissionsRequest());
             if (ModelState.IsValid)
             {
                 var command = new CreateOrEditRoleCommandRequest() { CreateOrEditRoleDto = mapRoleDto };
@@ -137,9 +138,9 @@ namespace Shop.Web.Areas.Admin.Controllers
                     case CreateOrEditRoleResult.NotFound:
                         TempData[WarningMessage] = "نقشی با مشخصات وارد شده یافت نشد";
                         break;
-                    //case CreateOrEditRoleResult.NotExistPermissions:
-                    //    TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
-                    //    break;
+                    case CreateOrEditRoleResult.NotExistPermissions:
+                        TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
+                        break;
                     case CreateOrEditRoleResult.Success:
                         TempData[SuccessMessage] = "عملیات ویرایش نقش با موفقیت انجام شد";
                         return RedirectToAction("FilterRoles");

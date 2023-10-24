@@ -8,6 +8,6 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IAccounts
     {
         Task SaveChangesAsync();
         Task<FilterRolesDto> FilterRolesAsync(FilterRolesDto filterRolesDto);
-        
+        Task<CreateOrEditRoleDto> GetEditRoleById(long roleId);
     }
 }

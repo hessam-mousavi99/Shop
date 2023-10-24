@@ -62,7 +62,7 @@ namespace Shop.Domain.Enums
     public enum CreateOrEditRoleResult
     {
         NotFound,
-        Success
-        //NotExistPermissions
+        Success,
+        NotExistPermissions
     }
 }

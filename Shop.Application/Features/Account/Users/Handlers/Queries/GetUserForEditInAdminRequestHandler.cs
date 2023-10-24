@@ -24,6 +24,7 @@ namespace Shop.Application.Features.Account.Users.Handlers.Queries
                 return null;
             }
             var edituser = _mapper.Map<EditUserFromAdminDto>(user);
+            edituser.RoleIds = user.UserRoles.Where(u=>u.UserId==request.Id).Select(u=>u.RoleId).ToList();
             return edituser;
         }
     }
