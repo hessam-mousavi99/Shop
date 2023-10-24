@@ -5,7 +5,6 @@ using Shop.Application.Utils.Paging;
 using Shop.Domain.Models.Account;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Generics;
-using System.Web.Mvc;
 
 namespace Shop.Persistence.Repositories.Accounts
 {

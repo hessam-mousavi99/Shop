@@ -16,6 +16,11 @@ namespace Shop.Domain.Enums
         NotFound,
         Success
     }
+    public enum EditUserFromAdminResult
+    {
+        NotFound,
+        Success
+    }
     public enum ActiveAccountResult
     {
         Error,
@@ -53,5 +58,11 @@ namespace Shop.Domain.Enums
         Variz = 1,
         [Display(Name = "برداشت")]
         Bardasht = 2
+    }
+    public enum CreateOrEditRoleResult
+    {
+        NotFound,
+        Success
+        //NotExistPermissions
     }
 }

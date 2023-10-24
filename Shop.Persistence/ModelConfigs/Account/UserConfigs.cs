@@ -11,6 +11,7 @@ namespace Shop.Persistence.ModelConfigs.Account
         {
             builder.HasQueryFilter(x => x.IsDelete == false);
             builder.HasMany<UserWallet>(g => g.UserWallets).WithOne(s => s.User).HasForeignKey(s => s.UserId);
+            builder.HasMany<UserRole>(g => g.UserRoles).WithOne(s => s.User).HasForeignKey(s => s.UserId);
         }
     }
 }

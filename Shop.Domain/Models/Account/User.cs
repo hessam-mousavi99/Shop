@@ -41,7 +41,10 @@ namespace Shop.Domain.Models.Account
         #endregion
 
         #region Relations
-        public ICollection<UserWallet>? UserWallets { get; set; }
+        public virtual ICollection<UserWallet>? UserWallets { get; set; }
+       
+        public virtual ICollection<UserRole>? UserRoles { get; set; }
+       
         #endregion
     }
 }
