@@ -5,5 +5,7 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IProductEntities
 {
     public interface IProductCategoryRepository : IGenericRepository<ProductCategory>
     {
+        Task RemoveProductSelectedCategoryAsync(long productId);
+        Task addProductSelectedCategoryAsync(List<long> productSelectedCategories, long productId);
     }
 }

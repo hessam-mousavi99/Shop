@@ -76,4 +76,39 @@ namespace Shop.Domain.Enums
         NotFound,
         Success
     }
+    public enum ProductState
+    {
+        [Display(Name = "همه")]
+        All,
+
+        [Display(Name = "فعال")]
+        IsActice,
+
+        [Display(Name = "حذف شده")]
+        Delete
+    }
+    public enum ProductOrder
+    {
+        [Display(Name = "همه")]
+        All,
+
+        [Display(Name = "جدیدترین ها")]
+        ProductNewss,
+
+        [Display(Name = "گران ترین ها")]
+        ProductExp,
+
+        [Display(Name = "ارزان ترین ها")]
+        ProductInExpensive
+    }
+    public enum ProductBox
+    {
+        Default,
+        ItemBoxInSite
+    }
+    public enum CreateProductResult
+    {
+        NotImage,
+        Success
+    }
 }

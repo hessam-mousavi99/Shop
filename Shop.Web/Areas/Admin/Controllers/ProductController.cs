@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.Features.Product.Category.Requests.Commands;
 using Shop.Application.Features.Product.Category.Requests.Queries;
+using Shop.Application.Features.Product.Product.Requests.Commands;
+using Shop.Application.Features.Product.Product.Requests.Queries;
 using Shop.Domain.Enums;
 using Shop.Web.Models.VM.Admin.Product;
 
@@ -94,10 +96,54 @@ namespace Shop.Web.Areas.Admin.Controllers
             var mapRequest = _mapper.Map<FilterCategoryDto>(filter);
             var response = await _mediator.Send(new FilterCategoryRequest() { FilterCategoryDto = mapRequest });
             var mapResponse = _mapper.Map<FilterCategoryVM>(response);
-            return View(mapResponse); ;
+            return View(mapResponse); 
         }
         #endregion
 
+        #endregion
+
+        #region Product
+        #region filter-products
+        public async Task<IActionResult> FilterProducts(FilterProductsVM filter)
+        {
+            filter.ProductState = ProductState.All;
+            var mapRequest = _mapper.Map<FilterProductsDto>(filter);
+            var response = await _mediator.Send(new FilterProductsRequest() { filterProductsDto = mapRequest });
+            var mapResponse = _mapper.Map<FilterProductsVM>(response);
+            return View(mapResponse);
+        }
+        #endregion
+
+        #region create-product
+        [HttpGet]
+        public async Task<IActionResult> CreateProduct()
+        {
+            TempData["Categories"] = await _mediator.Send(new GetAllCategoriesRequest());
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProduct(CreateProductVM createProduct, IFormFile productImage)
+        {
+            var mapProduct = _mapper.Map<CreateProductDto>(createProduct);
+            //TempData["Categories"] = await _mediator.Send(new GetAllCategoriesRequest());
+            if (ModelState.IsValid)
+            {
+                var command=new CreateProductCommandRequest() { CreateProductDto = mapProduct,Image=productImage };
+                var response= await _mediator.Send(command);
+                switch (response)
+                {
+                    case CreateProductResult.NotImage:
+                        TempData[WarningMessage] = "لطفا برای محصول یک تصویر انتخاب کنید";
+                        break;
+                    case CreateProductResult.Success:
+                        TempData[SuccessMessage] = "عملیات ثبت محصول با موفقیت انجام شد";
+                        return RedirectToAction("FilterProducts");
+                }
+            }
+            return View(createProduct);
+        }
+        #endregion
         #endregion
     }
 }
