@@ -65,4 +65,15 @@ namespace Shop.Domain.Enums
         Success,
         NotExistPermissions
     }
+    public enum CreateCategoryResult
+    {
+        IsExistUrlName,
+        Success
+    }
+    public enum EditCategoryResult
+    {
+        IsExistUrlName,
+        NotFound,
+        Success
+    }
 }

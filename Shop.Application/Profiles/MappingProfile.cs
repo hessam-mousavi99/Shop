@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.DTOs.Admin.Account;
+using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.DTOs.Wallet;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Wallet;
 
 namespace Shop.Application.Profiles
@@ -33,6 +35,13 @@ namespace Shop.Application.Profiles
             #region Role Mapping
 
             CreateMap<Role, CreateOrEditRoleDto>().ReverseMap();
+
+            #endregion
+
+            #region Product Mapping
+
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, EditCategoryDto>().ReverseMap();
 
             #endregion
         }
