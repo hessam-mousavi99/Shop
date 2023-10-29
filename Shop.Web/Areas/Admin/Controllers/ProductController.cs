@@ -106,7 +106,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         #region filter-products
         public async Task<IActionResult> FilterProducts(FilterProductsVM filter)
         {
-            filter.ProductState = ProductState.All;
+           // filter.ProductState = ProductState.All;
             var mapRequest = _mapper.Map<FilterProductsDto>(filter);
             var response = await _mediator.Send(new FilterProductsRequest() { filterProductsDto = mapRequest });
             var mapResponse = _mapper.Map<FilterProductsVM>(response);
@@ -185,6 +185,39 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(editProduct);
         }
         #endregion
+
+        #region delete product
+        public async Task<IActionResult> DeleteProduct(long productId)
+        {
+            var result = await _mediator.Send(new DeleteProductCommandRequest() { Id = productId });
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول شما با موفقیت حذف شد";
+                return RedirectToAction("FilterProducts");
+            }
+
+            TempData[WarningMessage] = "در حذف محصول خطایی رخ داده است";
+            return RedirectToAction("FilterProducts");
+        }
+        #endregion
+
+        #region recover producr
+        public async Task<IActionResult> RecoverProduct(long productId)
+        {
+            var result = await _mediator.Send(new RecoveryProductCommandRequest() { Id = productId });
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول شما با موفقیت بازگردانی شد";
+                return RedirectToAction("FilterProducts");
+
+            }
+
+            TempData[WarningMessage] = "در بازگردانی محصول خطایی رخ داده است";
+            return RedirectToAction("FilterProducts");
+        }
+        #endregion
+
 
         #endregion
     }
