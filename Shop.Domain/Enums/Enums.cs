@@ -111,4 +111,10 @@ namespace Shop.Domain.Enums
         NotImage,
         Success
     }
+    public enum EditProductResult
+    {
+        NotFound,
+        NotProductSelectedCategoryHasNull,
+        Success
+    }
 }

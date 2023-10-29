@@ -126,7 +126,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         public async Task<IActionResult> CreateProduct(CreateProductVM createProduct, IFormFile productImage)
         {
             var mapProduct = _mapper.Map<CreateProductDto>(createProduct);
-            //TempData["Categories"] = await _mediator.Send(new GetAllCategoriesRequest());
+          
             if (ModelState.IsValid)
             {
                 var command=new CreateProductCommandRequest() { CreateProductDto = mapProduct,Image=productImage };
@@ -144,6 +144,48 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(createProduct);
         }
         #endregion
+
+        #region edit-product
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(long productId)
+        {
+            var data = await _mediator.Send(new GetEditProductRequest() { Id = productId });
+            if (data == null)
+            {
+                return NotFound();
+            }
+            TempData["Categories"] = await _mediator.Send(new GetAllCategoriesRequest());
+            var dataVM = _mapper.Map<EditProductVM>(data);
+            return View(dataVM);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(EditProductVM editProduct)
+        {
+            var productDto = _mapper.Map<EditProductDto>(editProduct);
+            if (ModelState.IsValid)
+            {
+                var command = new EditProductCommandRequest() { EditProductDto = productDto };
+                var response= await _mediator.Send(command);
+                switch (response)
+                {
+                    case EditProductResult.NotFound:
+                        TempData[WarningMessage] = "محصولی با مشخصات وارد شده یافت نشد";
+                        break;
+                    case EditProductResult.NotProductSelectedCategoryHasNull:
+                        TempData[WarningMessage] = "لطفا دسته بندی محصول را وارد کنید";
+                        break;
+                    case EditProductResult.Success:
+                        TempData[SuccessMessage] = ".ویرایش محصول با موفقیت انجام شد";
+                        return RedirectToAction("FilterProducts");
+                }
+            }
+            TempData["Categories"] = await _mediator.Send(new GetAllCategoriesRequest());
+
+            return View(editProduct);
+        }
+        #endregion
+
         #endregion
     }
 }

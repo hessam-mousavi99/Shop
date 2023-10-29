@@ -17,7 +17,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task addProductSelectedCategoryAsync(List<long> productSelectedCategories, long productId)
         {
-            if (productSelectedCategories!=null && productSelectedCategories.Any())
+            if (productSelectedCategories != null && productSelectedCategories.Any())
             {
                 var newSelected = new List<ProductCategory>();
                 foreach (var categoryId in productSelectedCategories)
@@ -33,6 +33,12 @@ namespace Shop.Persistence.Repositories.ProductEntities
             }
         }
 
+        public async Task<List<long>> GetAllProductCategoryId(long productId)
+        {
+            return await _context.ProductCategories.AsQueryable().
+                Where(c => !c.IsDelete && c.ProductId == productId).Select(c => c.Id).ToListAsync();
+        }
+
         public async Task RemoveProductSelectedCategoryAsync(long productId)
         {
             var allProductSelectedCategories = await _context.ProductCategories.AsQueryable().
@@ -40,6 +46,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
             if (allProductSelectedCategories.Any())
             {
                 _context.ProductCategories.RemoveRange(allProductSelectedCategories);
+                await _context.SaveChangesAsync();
             }
         }
     }

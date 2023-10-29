@@ -7,5 +7,6 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IProductEntities
     {
         Task RemoveProductSelectedCategoryAsync(long productId);
         Task addProductSelectedCategoryAsync(List<long> productSelectedCategories, long productId);
+        Task<List<long>> GetAllProductCategoryId(long productId);
     }
 }
