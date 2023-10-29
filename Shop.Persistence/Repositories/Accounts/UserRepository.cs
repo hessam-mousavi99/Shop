@@ -51,5 +51,18 @@ namespace Shop.Persistence.Repositories.Accounts
 
             return filterUserDto.SetPaging(pager).SetUsers(allData);
         }
+
+        public bool CheckPermission(long permissionId, string phoneNumber)
+        {
+            long userId = _context.Users.AsQueryable().Single(x => x.PhoneNumber == phoneNumber).Id;
+
+            var userRole=_context.UserRoles.AsQueryable().Where(c=>c.UserId==userId).Select(x=>x.RoleId).ToList();
+
+            if (!userRole.Any()) { return false; }
+
+            var permissions = _context.RolePermissions.AsQueryable().Where(c => c.PermissionId == permissionId).Select(x => x.RoleId).ToList();
+
+            return permissions.Any(c=>userRole.Contains(c));
+        }
     }
 }

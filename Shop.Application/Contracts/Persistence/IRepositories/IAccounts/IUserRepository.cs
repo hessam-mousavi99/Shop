@@ -10,5 +10,6 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IAccounts
         Task SaveChangesAsync();
         Task<User> GetUserbyPhoneNumberAsync(string phonenumber);
         Task<FilterUserDto> FilterUserAsync(FilterUserDto filterUserDto);
+        bool CheckPermission(long permissionId, string phoneNumber);
     }
 }

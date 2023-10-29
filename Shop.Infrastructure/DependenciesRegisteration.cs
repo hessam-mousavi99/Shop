@@ -17,6 +17,7 @@ namespace Shop.Infrastructure
             #region Services
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<IUserService, UserService>();
             #endregion
 
             #region Repositories

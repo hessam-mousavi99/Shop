@@ -37,6 +37,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
             switch (filterProductsDto.ProductState)
             {
                 case ProductState.All:
+                    query = query.Where(c => !c.IsDelete);
                     break;
                 case ProductState.IsActice:
                     query = query.Where(p => p.IsActive);
