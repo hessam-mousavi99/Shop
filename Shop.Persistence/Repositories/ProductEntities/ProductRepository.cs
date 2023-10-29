@@ -18,6 +18,11 @@ namespace Shop.Persistence.Repositories.ProductEntities
             _context = context;
         }
 
+        public async Task<bool> CheckProductExist(long productId)
+        {
+            return await _context.Products.AsQueryable().AnyAsync(c=>c.Id==productId);
+        }
+
         public async Task<FilterProductsDto> FilterProducts(FilterProductsDto filterProductsDto)
         {
             var query = _context.Products.Include(p => p.ProductCategories).ThenInclude(p => p.Category).AsQueryable();

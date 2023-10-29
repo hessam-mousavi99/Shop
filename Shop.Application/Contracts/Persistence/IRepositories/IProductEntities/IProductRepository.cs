@@ -8,5 +8,6 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IProductEntities
     {
         Task SaveChangesAsync();
         Task<FilterProductsDto> FilterProducts(FilterProductsDto filterProductsDto);
+        Task<bool> CheckProductExist(long productId);
     }
 }

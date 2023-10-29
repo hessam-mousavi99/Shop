@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.Features.Product.Category.Requests.Commands;
 using Shop.Application.Features.Product.Category.Requests.Queries;
+using Shop.Application.Features.Product.Gallery.Requests.Command;
+using Shop.Application.Features.Product.Gallery.Requests.Queries;
 using Shop.Application.Features.Product.Product.Requests.Commands;
 using Shop.Application.Features.Product.Product.Requests.Queries;
 using Shop.Domain.Enums;
+using Shop.Web.Extentions;
 using Shop.Web.Models.VM.Admin.Product;
 
 namespace Shop.Web.Areas.Admin.Controllers
@@ -219,6 +222,49 @@ namespace Shop.Web.Areas.Admin.Controllers
         #endregion
 
 
+        #endregion
+
+        #region Gallery
+        #region create
+        public IActionResult GalleryProduct(long productId)
+        {
+            ViewBag.productId = productId;
+            return View();
+        }
+
+
+        public async Task<IActionResult> AddImageToProduct(List<IFormFile> images, long productId)
+        {
+            var command=new AddProductGalleryCommandRequest() { Id=productId ,Images=images};
+            var response =await _mediator.Send(command);
+            if (response)
+            {
+                return JsonResponseStatus.Success();
+            }
+            return JsonResponseStatus.Error();
+        }
+        #endregion
+        #region list product galleries
+        public async Task<IActionResult> ProductGalleries(long productId)
+        {
+            var data = await _mediator.Send(new GetAllProductGalleriesRequest() { Id = productId });
+
+            return View(data);
+        }
+        #endregion
+
+        #region delete image
+        public async Task<IActionResult> DeleteImage(long galleryId)
+        {
+            var command=new DeleteImageCommandRequest() { Id=galleryId };
+            var response=await _mediator.Send(command);
+            if (response)
+            {
+                TempData[InfoMessage] = "حذف با موفقیت انجام شد";
+            }
+            return RedirectToAction("FilterProducts");
+        }
+        #endregion
         #endregion
     }
 }
