@@ -2,9 +2,11 @@
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.DTOs.Admin.Account;
 using Shop.Application.DTOs.Admin.Product;
+using Shop.Application.DTOs.Admin.SiteSetting.Slider;
 using Shop.Application.DTOs.Wallet;
 using Shop.Domain.Models.Account;
 using Shop.Domain.Models.ProductEntities;
+using Shop.Domain.Models.Site;
 using Shop.Domain.Models.Wallet;
 
 namespace Shop.Application.Profiles
@@ -46,6 +48,11 @@ namespace Shop.Application.Profiles
             CreateMap<Product, EditProductDto>().ReverseMap();
             CreateMap<ProductFeature, CreateFeatureDto>().ReverseMap();
 
+            #endregion
+
+            #region SiteSetting
+            CreateMap<Slider, CreateSliderDto>().ReverseMap();
+            CreateMap<Slider, EditSliderDto>().ReverseMap();
             #endregion
         }
     }

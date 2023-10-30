@@ -122,4 +122,15 @@ namespace Shop.Domain.Enums
         Error,
         Success
     }
+    public enum CreateSliderResult
+    {
+        ImageNotFound,
+        Success
+    }
+    public enum EditSliderResult
+    {
+        NotFound,
+        ImageNotFound,
+        Success
+    }
 }

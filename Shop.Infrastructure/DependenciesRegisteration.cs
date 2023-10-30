@@ -2,10 +2,12 @@
 using Shop.Application.Contracts.Infrastructure.IServices;
 using Shop.Application.Contracts.Persistence.IRepositories.IAccounts;
 using Shop.Application.Contracts.Persistence.IRepositories.IProductEntities;
+using Shop.Application.Contracts.Persistence.IRepositories.ISite;
 using Shop.Application.Contracts.Persistence.IRepositories.IWallets;
 using Shop.Infrastructure.Services;
 using Shop.Persistence.Repositories.Accounts;
 using Shop.Persistence.Repositories.ProductEntities;
+using Shop.Persistence.Repositories.Site;
 using Shop.Persistence.Repositories.Wallets;
 
 namespace Shop.Infrastructure
@@ -18,6 +20,7 @@ namespace Shop.Infrastructure
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISiteSettingService, SiteSettingService>();
             #endregion
 
             #region Repositories
@@ -32,6 +35,7 @@ namespace Shop.Infrastructure
             services.AddScoped<IProductGalleryRepository, ProductGalleryRepository>();
             services.AddScoped<IProductFeatureRepository, ProductFeatureRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<ISliderRepository, SliderRepository>();
             #endregion
         }
     }

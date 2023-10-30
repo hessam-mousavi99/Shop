@@ -2,10 +2,12 @@
 using Shop.Application.DTOs.Accounts;
 using Shop.Application.DTOs.Admin.Account;
 using Shop.Application.DTOs.Admin.Product;
+using Shop.Application.DTOs.Admin.SiteSetting.Slider;
 using Shop.Application.DTOs.Wallet;
 using Shop.Web.Models.VM.Account;
 using Shop.Web.Models.VM.Admin.Account;
 using Shop.Web.Models.VM.Admin.Product;
+using Shop.Web.Models.VM.Site.Slider;
 using Shop.Web.Models.VM.Wallet;
 
 namespace Shop.Web.Profiles
@@ -50,6 +52,12 @@ namespace Shop.Web.Profiles
             CreateMap<CreateProductDto, CreateProductVM>().ReverseMap();
             CreateMap<EditProductDto, EditProductVM>().ReverseMap();
             CreateMap<CreateFeatureDto, CreateFeatureVM>().ReverseMap();
+            #endregion
+
+            #region SiteSetting
+            CreateMap<FilterSlidersDto, FilterSlidersVM>().ReverseMap();
+            CreateMap<CreateSliderDto, CreateSliderVM>().ReverseMap();
+            CreateMap<EditSliderDto, EditSliderVM>().ReverseMap();
             #endregion
 
             #endregion
