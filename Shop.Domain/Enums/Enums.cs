@@ -130,7 +130,6 @@ namespace Shop.Domain.Enums
     public enum EditSliderResult
     {
         NotFound,
-        ImageNotFound,
         Success
     }
 }

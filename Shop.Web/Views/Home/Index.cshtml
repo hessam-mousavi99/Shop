@@ -3,44 +3,7 @@
 }
 
 <div class="intro-slider-container">
-    <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
-         data-owl-options='{
-                        "dots": false,
-                        "nav": false,
-                        "rtl": true,
-                            "responsive": {
-                            "992": {
-                                "nav": true
-                            }
-                        }
-                    }'>
-        <div class="intro-slide"
-             style="background-image: url(/images/demos/demo-6/slider/slide-1.jpg);">
-            <div class="container intro-content text-center">
-                <h3 class="intro-subtitle text-white">عالی به نظر برسید</h3>
-                <!-- End .h3 intro-subtitle -->
-                <h1 class="intro-title text-white">محصولات جدید</h1><!-- End .intro-title -->
-
-                <a href="category.html" class="btn btn-outline-white-4">
-                    <span>مشاهده</span>
-                </a>
-            </div><!-- End .intro-content -->
-        </div><!-- End .intro-slide -->
-
-        <div class="intro-slide"
-             style="background-image: url(/images/demos/demo-6/slider/slide-2.jpg);">
-            <div class="container intro-content text-center">
-                <h3 class="intro-subtitle text-white">از دست ندهید</h3><!-- End .h3 intro-subtitle -->
-                <h1 class="intro-title text-white">پیشنهاد های شگفت انگیز</h1><!-- End .intro-title -->
-
-                <a href="category.html" class="btn btn-outline-white-4">
-                    <span>مشاهده</span>
-                </a>
-            </div><!-- End .intro-content -->
-        </div><!-- End .intro-slide -->
-    </div><!-- End .intro-slider owl-carousel owl-theme -->
-
-    <span class="slider-loader"></span><!-- End .slider-loader -->
+    @await Component.InvokeAsync("SiteSlider");
 </div><!-- End .intro-slider-container -->
 
 <div class="pt-2 pb-3">

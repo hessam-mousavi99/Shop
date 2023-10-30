@@ -50,8 +50,9 @@ namespace Shop.Infrastructure.Services
 
         public async Task<EditSliderResult> EditSlider(EditSliderDto editSliderDto)
         {
-            var slider = await GetEditSlider(editSliderDto.Id);
+            var slider = await _sliderRepository.GetAsync(editSliderDto.Id);
             if (slider == null) { return EditSliderResult.NotFound; }
+            slider.Id=editSliderDto.Id;
             slider.SliderText = editSliderDto.SliderText;
             slider.Price = editSliderDto.Price;
             slider.Href = editSliderDto.Href;
@@ -63,12 +64,7 @@ namespace Shop.Infrastructure.Services
                 editSliderDto.ImageFile.AddImageToServer(imageName, PathExtensions.SliderOrginServer, 255, 255, PathExtensions.SliderThumbServer,slider.SliderImage);
                 slider.SliderImage = imageName;
             }
-            else
-            {
-                return EditSliderResult.ImageNotFound;
-            }
-            var editSlider=_mapper.Map<Slider>(slider);
-            await _sliderRepository.UpdateAsync(editSlider);
+            await _sliderRepository.UpdateAsync(slider);
             return EditSliderResult.Success;
         }
 
