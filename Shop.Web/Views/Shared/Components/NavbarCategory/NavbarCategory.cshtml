@@ -1,0 +1,20 @@
+﻿@using Shop.Application.DTOs.Admin.Product;
+@model FilterCategoryDto
+
+@if (Model.Categories !=null && Model.Categories.Any())
+{
+    <div class="dropdown category-dropdown">
+        <a class="dropdown-toggle" >دسته بندی فروشگاه</a>
+        <div class="dropdown-menu">
+            <nav class="side-nav">
+                <ul class="menu-vertical sf-arrows">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="item-lead">|<a href="#">@category.Title</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+}

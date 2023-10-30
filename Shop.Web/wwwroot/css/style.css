@@ -2455,7 +2455,7 @@ blockquote.text-white cite span {
   display: flex;
   align-items: center;
   align-self: stretch;
-  color: #333333;
+  color: #fff;
   font-weight: 500;
   font-size: 1.4rem;
   line-height: 1.5;
@@ -2483,7 +2483,6 @@ blockquote.text-white cite span {
   right: 0;
   bottom: 0;
   height: 1px;
-  background-color: #cc9966;
   transition: all .35s;
 }
 
@@ -7223,9 +7222,7 @@ a:focus {
   background-color: #c96;
 }
 
-.category-dropdown .dropdown-toggle:before {
-  background-color: #c96;
-}
+
 
 .category-dropdown .dropdown-toggle:hover,
 .category-dropdown .dropdown-toggle:focus {
@@ -9141,7 +9138,7 @@ a:focus {
 }
 
 .category-dropdown .dropdown-toggle:before {
-  background-color: #c96;
+ 
 }
 
 .category-dropdown .dropdown-toggle:hover,

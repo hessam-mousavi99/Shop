@@ -584,7 +584,7 @@ a:focus {
   background-color: #cc9966; }
 
 .category-dropdown .dropdown-toggle:before {
-  background-color: #cc9966; }
+  }
 .category-dropdown .dropdown-toggle:hover, .category-dropdown .dropdown-toggle:focus {
   color: #fff;
   background-color: #cc9966; }
