@@ -117,4 +117,9 @@ namespace Shop.Domain.Enums
         NotProductSelectedCategoryHasNull,
         Success
     }
+    public enum CreateFeatuersResult
+    {
+        Error,
+        Success
+    }
 }

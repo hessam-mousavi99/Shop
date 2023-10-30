@@ -49,6 +49,7 @@ namespace Shop.Web.Profiles
             CreateMap<EditCategoryDto, EditCategoryVM>().ReverseMap();
             CreateMap<CreateProductDto, CreateProductVM>().ReverseMap();
             CreateMap<EditProductDto, EditProductVM>().ReverseMap();
+            CreateMap<CreateFeatureDto, CreateFeatureVM>().ReverseMap();
             #endregion
 
             #endregion

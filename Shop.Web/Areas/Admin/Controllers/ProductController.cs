@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.Features.Product.Category.Requests.Commands;
 using Shop.Application.Features.Product.Category.Requests.Queries;
+using Shop.Application.Features.Product.Feature.Requests.Commands;
+using Shop.Application.Features.Product.Feature.Requests.Queries;
 using Shop.Application.Features.Product.Gallery.Requests.Command;
 using Shop.Application.Features.Product.Gallery.Requests.Queries;
 using Shop.Application.Features.Product.Product.Requests.Commands;
 using Shop.Application.Features.Product.Product.Requests.Queries;
 using Shop.Domain.Enums;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Web.Extentions;
 using Shop.Web.Models.VM.Admin.Product;
 
@@ -262,6 +265,56 @@ namespace Shop.Web.Areas.Admin.Controllers
             {
                 TempData[InfoMessage] = "حذف با موفقیت انجام شد";
             }
+            return RedirectToAction("FilterProducts");
+        }
+        #endregion
+        #endregion
+
+        #region Feature
+        #region create
+        [HttpGet]
+        public IActionResult CreateProductFeatuers(long productId)
+        {
+            var model = new CreateFeatureVM
+            {
+                ProductId = productId
+            };
+
+            return View(model);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProductFeatuers(CreateFeatureVM featuersViewModel)
+        {
+            var featureDto = _mapper.Map<CreateFeatureDto>(featuersViewModel);
+            if (ModelState.IsValid)
+            {
+                var command=new CreateFeatureCommandRequest() { CreateFeatureDto = featureDto };
+                var response=await _mediator.Send(command);
+                switch (response)
+                {
+                    case CreateFeatuersResult.Error:
+                        TempData[ErrorMessage] = "در ثبت ویژگی خطایی رخ داده است";
+                        break;
+                    case CreateFeatuersResult.Success:
+                        TempData[SuccessMessage] = "ویژگی با موفقیت ثبت شد";
+                        return RedirectToAction("FilterProducts");
+                }
+            }
+            return View(featuersViewModel);
+        }
+        #endregion
+        #region product featuers
+        public async Task<IActionResult> ProductFeatuers(long productId)
+        {
+            List<ProductFeature> features = await _mediator.Send(new GetProductFeaturesRequest() { ProductId = productId });
+            return View(features);
+        }
+        #endregion
+        #region delete productFeatuer
+        public async Task<IActionResult> DeleteFeatuers(long featuerId)
+        {
+            var command = new DeleteFeatureCommandRequest() { Id = featuerId };
+            var response=await _mediator.Send(command);
             return RedirectToAction("FilterProducts");
         }
         #endregion
