@@ -28,6 +28,7 @@ namespace Shop.Persistence.Context
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductGallery> ProductGalleries { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductComment> ProductComments { get; set; }
         #endregion
 
         #region site

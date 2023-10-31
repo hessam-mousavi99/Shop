@@ -38,6 +38,7 @@ namespace Shop.Domain.Models.ProductEntities
         public virtual ICollection<ProductCategory>? ProductCategories { get; set; }
         public virtual ICollection<ProductFeature>? ProductFeatures { get; set; }
         public virtual ICollection<ProductGallery>? ProductGalleries { get; set; }
+        public virtual ICollection<ProductComment>? ProductComments { get; set; }
 
         #endregion
     }

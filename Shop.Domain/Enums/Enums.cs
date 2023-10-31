@@ -132,4 +132,10 @@ namespace Shop.Domain.Enums
         NotFound,
         Success
     }
+    public enum CreateProductCommentResult
+    {
+        CheckUser,
+        CheckProduct,
+        Success
+    }
 }

@@ -12,6 +12,7 @@ namespace Shop.Persistence.ModelConfigs.ProductEntities
             builder.HasMany<ProductGallery>(x => x.ProductGalleries).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
             builder.HasMany<ProductCategory>(x => x.ProductCategories).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
             builder.HasMany<ProductFeature>(x => x.ProductFeatures).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
+            builder.HasMany<ProductComment>(x => x.ProductComments).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
         }
     }
 }

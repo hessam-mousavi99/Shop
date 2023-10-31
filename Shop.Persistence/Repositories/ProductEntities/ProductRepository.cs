@@ -75,7 +75,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
             #region ProductBox
             switch (filterProductsDto.ProductBox)
             {
-                case ProductBox.Default: 
+                case ProductBox.Default:
                     break;
                 case ProductBox.ItemBoxInSite:
                     var pagerBox = Pager.Build(filterProductsDto.PageId, await query.CountAsync(), filterProductsDto.TakeEntity, filterProductsDto.CountForShowAfterAndBefor);
@@ -151,5 +151,46 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
             return allProduct;
         }
+
+        public async Task<ProductDetailDto> ShowProductDetailAsync(long productId)
+        {
+            return await _context.Products.Include(c=>c.ProductCategories).ThenInclude(c=>c.Category)
+                .Include(c => c.ProductFeatures).Include(c => c.ProductGalleries).AsQueryable()
+                .Where(c=>c.Id==productId)
+                .Select(c => new ProductDetailDto()
+            {
+                Category = c.ProductCategories.Select(c => c.Category).First(),
+                Description = c.Description,
+                Name = c.Name,
+                Price = c.Price,
+                ProductId = c.Id,
+                ProductImageName = c.ProductImageName,
+                ProductComment = 0,
+                ProductFeatures = c.ProductFeatures.ToList(),
+                ProductImages = c.ProductGalleries.Select(c => c.ImageName).ToList(),
+                ShortDescription = c.ShortDescription,
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<ProductItemDto>> GetRelatedProduct(string cateName, long productId)
+        {
+            var product = await _context.Products.Include(c => c.ProductComments).Include(c => c.ProductCategories)
+                .ThenInclude(c => c.Category).Where(c => c.ProductCategories.Any(c => c.Category.UrlName == cateName)
+                && c.Id != productId).Take(6).ToListAsync();
+
+            var data = product.Select(c => new ProductItemDto
+            {
+                Category = c.ProductCategories.Select(c => c.Category).First(),
+                CommentCount = c.ProductComments.Count(),
+                Price = c.Price,
+                ProductId = c.Id,
+                ProductImageName = c.ProductImageName,
+                ProductName = c.Name
+            }).ToList();
+
+            return data;
+        }
+
+
     }
 }

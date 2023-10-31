@@ -7,6 +7,7 @@ using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.DTOs.Admin.SiteSetting.Slider;
 using Shop.Application.Features.Account.Users.Requests.Queries;
 using Shop.Application.Features.Product.Category.Requests.Queries;
+using Shop.Application.Features.Product.Comment.Requests.Queries;
 using Shop.Domain.Models.Account;
 
 namespace Shop.Web.ViewComponents
@@ -146,6 +147,29 @@ namespace Shop.Web.ViewComponents
         {
             var data = await _siteSettingService.ShowAllProductsInCategory("Men");
             return View("AllProductInCategoryMen", data);
+        }
+    }
+    #endregion
+
+    #region All-productInCategoryPc - home
+    public class ProductCommentsViewComponent : ViewComponent
+    {
+        #region constractor
+      
+        private readonly IMediator _mediator;
+
+        public ProductCommentsViewComponent(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync(long productId)
+        {
+
+            var data = await _mediator.Send(new GetAllCommentsByIdRequest() { ProductId = productId });
+
+            return View("ProductComments", data);
         }
     }
     #endregion
