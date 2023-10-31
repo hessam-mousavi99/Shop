@@ -77,7 +77,7 @@ namespace Shop.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var filterCategory = new FilterCategoryDto();
-            filterCategory.TakeEntity = 6;
+            filterCategory.TakeEntity = 2;
             var data =await _mediator.Send(new FilterCategoryRequest() { FilterCategoryDto=filterCategory});
             return View("PopularCategory", data);
         }
@@ -97,6 +97,55 @@ namespace Shop.Web.ViewComponents
             var filterCategory = new FilterCategoryDto();
             var data = await _mediator.Send(new FilterCategoryRequest() { FilterCategoryDto = filterCategory });
             return View("NavbarCategory", data);
+        }
+    }
+    #endregion
+
+    #region  AllProductInSlider
+    public class AllProductInSliderViewComponent : ViewComponent
+    {
+        private readonly ISiteSettingService _siteSettingService;
+
+        public AllProductInSliderViewComponent(ISiteSettingService siteSettingService)
+        {
+            _siteSettingService = siteSettingService;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+        var data =await _siteSettingService.ShowAllProductsInSlider();
+            return View("AllProductInSlider", data);
+        }
+    }
+    #endregion
+    #region  AllProductInCategoryWomen
+    public class AllProductInCategoryWomenViewComponent : ViewComponent
+    {
+        private readonly ISiteSettingService _siteSettingService;
+
+        public AllProductInCategoryWomenViewComponent(ISiteSettingService siteSettingService)
+        {
+            _siteSettingService = siteSettingService;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var data = await _siteSettingService.ShowAllProductsInCategory("Women");
+            return View("AllProductInCategoryWomen", data);
+        }
+    }
+    #endregion
+    #region  AllProductInCategoryMen
+    public class AllProductInCategoryMenViewComponent : ViewComponent
+    {
+        private readonly ISiteSettingService _siteSettingService;
+
+        public AllProductInCategoryMenViewComponent(ISiteSettingService siteSettingService)
+        {
+            _siteSettingService = siteSettingService;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var data = await _siteSettingService.ShowAllProductsInCategory("Men");
+            return View("AllProductInCategoryMen", data);
         }
     }
     #endregion

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence.IRepositories.IProductEntities;
 using Shop.Application.DTOs.Admin.Product;
+using Shop.Application.DTOs.Site;
 using Shop.Application.Utils.Paging;
 using Shop.Domain.Enums;
 using Shop.Domain.Models.ProductEntities;
@@ -80,6 +81,41 @@ namespace Shop.Persistence.Repositories.ProductEntities
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<ProductItemDto>> ShowAllProductsInCategory(string hrefName)
+        {
+            var product = await _context.Products.Include(c => c.ProductCategories).
+                ThenInclude(c => c.Category).Where(c => c.ProductCategories.
+                Any(c => c.Category.UrlName == hrefName)).ToListAsync();
+
+            var data = product.Select(c => new ProductItemDto
+            {
+                Category = c.ProductCategories.Select(c => c.Category).First(),
+                CommentCount =0,// c.ProductComments.Count(),
+                Price = c.Price,
+                ProductId = c.Id,
+                ProductImageName = c.ProductImageName,
+                ProductName = c.Name
+            }).ToList();
+
+            return data;
+        }
+
+        public async Task<List<ProductItemDto>> ShowAllProductsInSlider()
+        {
+            var allProduct = await _context.Products.Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
+              .Select(c => new ProductItemDto
+              {
+                  Category = c.ProductCategories.Select(c => c.Category).First(),
+                  CommentCount =0, //c.ProductComments.Count(),
+                  Price = c.Price,
+                  ProductId = c.Id,
+                  ProductImageName = c.ProductImageName,
+                  ProductName = c.Name
+              }).ToListAsync();
+
+            return allProduct;
         }
     }
 }

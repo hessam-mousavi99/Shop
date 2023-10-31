@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Shop.Application.Contracts.Infrastructure.IServices;
+using Shop.Application.Contracts.Persistence.IRepositories.IProductEntities;
 using Shop.Application.Contracts.Persistence.IRepositories.ISite;
 using Shop.Application.DTOs.Admin.SiteSetting.Slider;
+using Shop.Application.DTOs.Site;
 using Shop.Application.Extentions;
 using Shop.Application.Utils;
 using Shop.Domain.Enums;
@@ -12,11 +14,13 @@ namespace Shop.Infrastructure.Services
     public class SiteSettingService : ISiteSettingService
     {
         private readonly ISliderRepository _sliderRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public SiteSettingService(ISliderRepository sliderRepository, IMapper mapper)
+        public SiteSettingService(ISliderRepository sliderRepository, IProductRepository productRepository, IMapper mapper)
         {
             _sliderRepository = sliderRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
@@ -52,7 +56,7 @@ namespace Shop.Infrastructure.Services
         {
             var slider = await _sliderRepository.GetAsync(editSliderDto.Id);
             if (slider == null) { return EditSliderResult.NotFound; }
-            slider.Id=editSliderDto.Id;
+            slider.Id = editSliderDto.Id;
             slider.SliderText = editSliderDto.SliderText;
             slider.Price = editSliderDto.Price;
             slider.Href = editSliderDto.Href;
@@ -61,7 +65,7 @@ namespace Shop.Infrastructure.Services
             if (editSliderDto.ImageFile != null && editSliderDto.ImageFile.IsImage())
             {
                 var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(editSliderDto.ImageFile.FileName);
-                editSliderDto.ImageFile.AddImageToServer(imageName, PathExtensions.SliderOrginServer, 255, 255, PathExtensions.SliderThumbServer,slider.SliderImage);
+                editSliderDto.ImageFile.AddImageToServer(imageName, PathExtensions.SliderOrginServer, 255, 255, PathExtensions.SliderThumbServer, slider.SliderImage);
                 slider.SliderImage = imageName;
             }
             await _sliderRepository.UpdateAsync(slider);
@@ -73,6 +77,16 @@ namespace Shop.Infrastructure.Services
             var slider = await _sliderRepository.GetAsync(sliderId);
             slider.IsDelete = true;
             await _sliderRepository.UpdateAsync(slider);
+        }
+
+        public async Task<List<ProductItemDto>> ShowAllProductsInSlider()
+        {
+            return await _productRepository.ShowAllProductsInSlider();
+        }
+
+        public async Task<List<ProductItemDto>> ShowAllProductsInCategory(string hrefName)
+        {
+            return await _productRepository.ShowAllProductsInCategory(hrefName);
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿@using Shop.Application.DTOs.Site;
+@model List<ProductItemDto>
+
+@if (Model != null && Model.Any())
+{
+    @foreach (var product in Model)
+    {
+        <partial name="_ProductBox" model="product" />
+    }
+}
