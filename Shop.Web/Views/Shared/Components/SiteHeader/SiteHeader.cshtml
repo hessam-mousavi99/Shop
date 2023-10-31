@@ -62,11 +62,11 @@
             <div class="header-left">
                 <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="#" method="get">
+                    <form asp-area="" asp-controller="Product" asp-action="Products" method="get">
                         <div class="header-search-wrapper search-wrapper-wide">
                            
                             <a class="btn btn-primary" type="submit"><i class="icon-search"></i></a>
-                            <input type="search" class="form-control mr-4" name="q" id="q"
+                            <input type="search" class="form-control mr-4" name="ProductName" id="q"
                                    placeholder="جستجوی محصول ..." required>
                         </div>
                     </form>

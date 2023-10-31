@@ -9,13 +9,13 @@
     {
         <div class="col-sm-6">
             <div class="banner banner-overlay">
-                <a asp-area=" " asp-controller=" Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName">
+                <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName">
                     <img src="@(PathExtensions.CategoryOrgin +category.ImageName)" alt="بنر">
                 </a>
 
                 <div class="banner-content banner-content-center">
                     <h3 class="banner-title text-white"><a href=""><strong>@category.Title</strong></a></h3>
-                    <a asp-area=" " asp-controller=" Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName" class="btn btn-outline-white banner-link underline">خرید</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName" class="btn btn-outline-white banner-link underline">خرید</a>
                 </div>
             </div>
         </div>

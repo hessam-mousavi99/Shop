@@ -7,6 +7,7 @@ using Shop.Domain.Enums;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Generics;
+using System.Web.Mvc;
 
 namespace Shop.Persistence.Repositories.ProductEntities
 {
@@ -21,7 +22,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<bool> CheckProductExist(long productId)
         {
-            return await _context.Products.AsQueryable().AnyAsync(c=>c.Id==productId);
+            return await _context.Products.AsQueryable().AnyAsync(c => c.Id == productId);
         }
 
         public async Task<FilterProductsDto> FilterProducts(FilterProductsDto filterProductsDto)
@@ -71,25 +72,43 @@ namespace Shop.Persistence.Repositories.ProductEntities
             }
             #endregion
 
-            #region paging
+            #region ProductBox
+            switch (filterProductsDto.ProductBox)
+            {
+                case ProductBox.Default: 
+                    break;
+                case ProductBox.ItemBoxInSite:
+                    var pagerBox = Pager.Build(filterProductsDto.PageId, await query.CountAsync(), filterProductsDto.TakeEntity, filterProductsDto.CountForShowAfterAndBefor);
+                    var allDataBox = await query.Paging(pagerBox).Select(c => new ProductItemDto
+                    {
+                        Category = c.ProductCategories.Select(c => c.Category).First(),
+                        CommentCount = 0,
+                        Price = c.Price,
+                        ProductId = c.Id,
+                        ProductImageName = c.ProductImageName,
+                        ProductName = c.Name
+                    }).ToListAsync();
+                    return filterProductsDto.SetPaging(pagerBox).SetProductsItem(allDataBox);
+
+            }
+            #endregion
             var pager = Pager.Build(filterProductsDto.PageId, await query.CountAsync(), filterProductsDto.TakeEntity, filterProductsDto.CountForShowAfterAndBefor);
             var allData = await query.Paging(pager).ToListAsync();
-            #endregion
             return filterProductsDto.SetPaging(pager).SetProducts(allData);
         }
 
         public async Task<List<ProductItemDto>> LastProducts()
         {
-           var lastproducts= await _context.Products.Include(c=>c.ProductCategories).ThenInclude(c=>c.Category).AsQueryable()
-                .OrderByDescending(c => c.CreateDate).Select(c=> new ProductItemDto()
-                {
-                    Category=c.ProductCategories.Select(c=>c.Category).First(),
-                    CommentCount=0,//c.ProductComments.Count(),
-                    Price = c.Price,
-                    ProductId = c.Id,
-                    ProductImageName = c.ProductImageName,
-                    ProductName = c.Name
-                }).Take(8).ToListAsync();
+            var lastproducts = await _context.Products.Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
+                 .OrderByDescending(c => c.CreateDate).Select(c => new ProductItemDto()
+                 {
+                     Category = c.ProductCategories.Select(c => c.Category).First(),
+                     CommentCount = 0,//c.ProductComments.Count(),
+                     Price = c.Price,
+                     ProductId = c.Id,
+                     ProductImageName = c.ProductImageName,
+                     ProductName = c.Name
+                 }).Take(8).ToListAsync();
             return lastproducts;
         }
 
@@ -107,7 +126,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
             var data = product.Select(c => new ProductItemDto
             {
                 Category = c.ProductCategories.Select(c => c.Category).First(),
-                CommentCount =0,// c.ProductComments.Count(),
+                CommentCount = 0,// c.ProductComments.Count(),
                 Price = c.Price,
                 ProductId = c.Id,
                 ProductImageName = c.ProductImageName,
@@ -123,7 +142,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
               .Select(c => new ProductItemDto
               {
                   Category = c.ProductCategories.Select(c => c.Category).First(),
-                  CommentCount =0, //c.ProductComments.Count(),
+                  CommentCount = 0, //c.ProductComments.Count(),
                   Price = c.Price,
                   ProductId = c.Id,
                   ProductImageName = c.ProductImageName,

@@ -1,4 +1,5 @@
-﻿using Shop.Domain.Enums;
+﻿using Shop.Application.DTOs.Site;
+using Shop.Domain.Enums;
 using Shop.Domain.Models.BaseEntities;
 
 namespace Shop.Application.DTOs.Admin.Product
@@ -8,6 +9,7 @@ namespace Shop.Application.DTOs.Admin.Product
         public string ProductName { get; set; } = string.Empty;
         public string FilterByCategory { get; set; } = string.Empty;
         public List<Shop.Domain.Models.ProductEntities.Product> Products { get; set; }
+        public List<ProductItemDto> ProductItems { get; set; }
         public ProductState ProductState { get; set; }
         public ProductOrder ProductOrder { get; set; }
         public ProductBox ProductBox { get; set; }
@@ -17,7 +19,11 @@ namespace Shop.Application.DTOs.Admin.Product
             this.Products = products;
             return this;
         }
-
+        public FilterProductsDto SetProductsItem(List<ProductItemDto> productItemViews)
+        {
+            this.ProductItems = productItemViews;
+            return this;
+        }
         public FilterProductsDto SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;

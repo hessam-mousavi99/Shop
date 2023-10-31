@@ -10,7 +10,7 @@
                 <ul class="menu-vertical sf-arrows">
                     @foreach (var category in Model.Categories)
                     {
-                        <li class="item-lead">|<a href="#">@category.Title</a></li>
+                        <li class="item-lead">|<a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName">@category.Title</a></li>
                     }
                 </ul>
             </nav>
