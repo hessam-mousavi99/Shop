@@ -12,5 +12,7 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IProductEntities
         Task<bool> CheckProductExist(long productId);
         Task<List<ProductItemDto>> ShowAllProductsInSlider();
         Task<List<ProductItemDto>> ShowAllProductsInCategory(string hrefName);
+        Task<List<ProductItemDto>> LastProducts();
+
     }
 }

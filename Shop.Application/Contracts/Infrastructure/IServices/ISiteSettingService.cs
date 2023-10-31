@@ -14,6 +14,7 @@ namespace Shop.Application.Contracts.Infrastructure.IServices
         Task DeleteSlider(long sliderId);
         Task<List<ProductItemDto>> ShowAllProductsInSlider();
         Task<List<ProductItemDto>> ShowAllProductsInCategory(string hrefName);
+        Task<List<ProductItemDto>> LastProducts();
         #endregion 
     }
 }

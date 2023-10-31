@@ -88,5 +88,10 @@ namespace Shop.Infrastructure.Services
         {
             return await _productRepository.ShowAllProductsInCategory(hrefName);
         }
+
+        public async Task<List<ProductItemDto>> LastProducts()
+        {
+            return await _productRepository.LastProducts();
+        }
     }
 }

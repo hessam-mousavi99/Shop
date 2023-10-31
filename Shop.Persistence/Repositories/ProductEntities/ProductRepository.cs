@@ -78,6 +78,21 @@ namespace Shop.Persistence.Repositories.ProductEntities
             return filterProductsDto.SetPaging(pager).SetProducts(allData);
         }
 
+        public async Task<List<ProductItemDto>> LastProducts()
+        {
+           var lastproducts= await _context.Products.Include(c=>c.ProductCategories).ThenInclude(c=>c.Category).AsQueryable()
+                .OrderByDescending(c => c.CreateDate).Select(c=> new ProductItemDto()
+                {
+                    Category=c.ProductCategories.Select(c=>c.Category).First(),
+                    CommentCount=0,//c.ProductComments.Count(),
+                    Price = c.Price,
+                    ProductId = c.Id,
+                    ProductImageName = c.ProductImageName,
+                    ProductName = c.Name
+                }).Take(8).ToListAsync();
+            return lastproducts;
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
