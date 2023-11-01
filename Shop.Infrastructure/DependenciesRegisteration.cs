@@ -36,6 +36,7 @@ namespace Shop.Infrastructure
             services.AddScoped<IProductFeatureRepository, ProductFeatureRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<ISliderRepository, SliderRepository>();
+            services.AddScoped<IProductCommentRepository, ProductCommentRepository>();
             #endregion
         }
     }

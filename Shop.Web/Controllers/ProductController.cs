@@ -8,7 +8,6 @@ using Shop.Application.Features.Product.Category.Requests.Queries;
 using Shop.Application.Features.Product.Comment.Requests.Commands;
 using Shop.Application.Features.Product.Product.Requests.Queries;
 using Shop.Domain.Enums;
-using Shop.Web.Models.VM.Admin.Product;
 using Shop.Web.Models.VM.Site.Products;
 
 namespace Shop.Web.Controllers

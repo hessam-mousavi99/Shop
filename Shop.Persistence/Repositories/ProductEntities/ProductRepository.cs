@@ -27,7 +27,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<FilterProductsDto> FilterProducts(FilterProductsDto filterProductsDto)
         {
-            var query = _context.Products.Include(p => p.ProductCategories).ThenInclude(p => p.Category).AsQueryable();
+            var query = _context.Products.Include(c => c.ProductComments).Include(p => p.ProductCategories).ThenInclude(p => p.Category).AsQueryable();
 
             #region Filter
             if (!string.IsNullOrEmpty(filterProductsDto.ProductName))
@@ -82,7 +82,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
                     var allDataBox = await query.Paging(pagerBox).Select(c => new ProductItemDto
                     {
                         Category = c.ProductCategories.Select(c => c.Category).First(),
-                        CommentCount = 0,
+                        CommentCount = c.ProductComments.Count(),
                         Price = c.Price,
                         ProductId = c.Id,
                         ProductImageName = c.ProductImageName,
@@ -99,11 +99,11 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<List<ProductItemDto>> LastProducts()
         {
-            var lastproducts = await _context.Products.Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
+            var lastproducts = await _context.Products.Include(c => c.ProductComments).Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
                  .OrderByDescending(c => c.CreateDate).Select(c => new ProductItemDto()
                  {
                      Category = c.ProductCategories.Select(c => c.Category).First(),
-                     CommentCount = 0,//c.ProductComments.Count(),
+                     CommentCount = c.ProductComments.Count(),
                      Price = c.Price,
                      ProductId = c.Id,
                      ProductImageName = c.ProductImageName,
@@ -119,14 +119,14 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<List<ProductItemDto>> ShowAllProductsInCategory(string hrefName)
         {
-            var product = await _context.Products.Include(c => c.ProductCategories).
+            var product = await _context.Products.Include(c=>c.ProductComments).Include(c => c.ProductCategories).
                 ThenInclude(c => c.Category).Where(c => c.ProductCategories.
                 Any(c => c.Category.UrlName == hrefName)).ToListAsync();
 
             var data = product.Select(c => new ProductItemDto
             {
                 Category = c.ProductCategories.Select(c => c.Category).First(),
-                CommentCount = 0,// c.ProductComments.Count(),
+                CommentCount = c.ProductComments.Count(),
                 Price = c.Price,
                 ProductId = c.Id,
                 ProductImageName = c.ProductImageName,
@@ -138,11 +138,11 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<List<ProductItemDto>> ShowAllProductsInSlider()
         {
-            var allProduct = await _context.Products.Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
+            var allProduct = await _context.Products.Include(c => c.ProductComments).Include(c => c.ProductCategories).ThenInclude(c => c.Category).AsQueryable()
               .Select(c => new ProductItemDto
               {
                   Category = c.ProductCategories.Select(c => c.Category).First(),
-                  CommentCount = 0, //c.ProductComments.Count(),
+                  CommentCount = c.ProductComments.Count(),
                   Price = c.Price,
                   ProductId = c.Id,
                   ProductImageName = c.ProductImageName,
@@ -154,7 +154,7 @@ namespace Shop.Persistence.Repositories.ProductEntities
 
         public async Task<ProductDetailDto> ShowProductDetailAsync(long productId)
         {
-            return await _context.Products.Include(c=>c.ProductCategories).ThenInclude(c=>c.Category)
+            return await _context.Products.Include(c=>c.ProductComments).Include(c=>c.ProductCategories).ThenInclude(c=>c.Category)
                 .Include(c => c.ProductFeatures).Include(c => c.ProductGalleries).AsQueryable()
                 .Where(c=>c.Id==productId)
                 .Select(c => new ProductDetailDto()
@@ -165,8 +165,8 @@ namespace Shop.Persistence.Repositories.ProductEntities
                 Price = c.Price,
                 ProductId = c.Id,
                 ProductImageName = c.ProductImageName,
-                ProductComment = 0,
-                ProductFeatures = c.ProductFeatures.ToList(),
+                ProductComment = c.ProductComments.Count(),
+                    ProductFeatures = c.ProductFeatures.ToList(),
                 ProductImages = c.ProductGalleries.Select(c => c.ImageName).ToList(),
                 ShortDescription = c.ShortDescription,
             }).FirstOrDefaultAsync();
