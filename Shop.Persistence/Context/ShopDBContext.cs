@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.OrderEntities;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Site;
 using Shop.Domain.Models.Wallet;
@@ -33,6 +34,11 @@ namespace Shop.Persistence.Context
 
         #region site
         public DbSet<Slider> Sliders { get; set; }
+        #endregion
+
+        #region Order
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

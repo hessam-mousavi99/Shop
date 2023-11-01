@@ -1,5 +1,6 @@
 ﻿using Shop.Domain.Enums;
 using Shop.Domain.Models.BaseEntities;
+using Shop.Domain.Models.OrderEntities;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Wallet;
 using System.ComponentModel.DataAnnotations;
@@ -45,7 +46,8 @@ namespace Shop.Domain.Models.Account
         public virtual ICollection<UserWallet>? UserWallets { get; set; }
         public virtual ICollection<UserRole>? UserRoles { get; set; }
         public virtual ICollection<ProductComment>? ProductComments { get; set; }
-       
+        public virtual ICollection<Order>? Orders { get; set; }
+
         #endregion
     }
 }

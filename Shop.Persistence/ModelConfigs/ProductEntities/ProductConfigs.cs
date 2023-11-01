@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shop.Domain.Models.OrderEntities;
 using Shop.Domain.Models.ProductEntities;
 
 namespace Shop.Persistence.ModelConfigs.ProductEntities
@@ -13,6 +14,7 @@ namespace Shop.Persistence.ModelConfigs.ProductEntities
             builder.HasMany<ProductCategory>(x => x.ProductCategories).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
             builder.HasMany<ProductFeature>(x => x.ProductFeatures).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
             builder.HasMany<ProductComment>(x => x.ProductComments).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
+            builder.HasMany<OrderDetail>(x => x.OrderDetails).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
         }
     }
 }

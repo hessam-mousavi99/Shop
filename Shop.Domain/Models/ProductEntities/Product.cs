@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.BaseEntities;
+using Shop.Domain.Models.OrderEntities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Domain.Models.ProductEntities
@@ -39,6 +40,7 @@ namespace Shop.Domain.Models.ProductEntities
         public virtual ICollection<ProductFeature>? ProductFeatures { get; set; }
         public virtual ICollection<ProductGallery>? ProductGalleries { get; set; }
         public virtual ICollection<ProductComment>? ProductComments { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
 
         #endregion
     }
