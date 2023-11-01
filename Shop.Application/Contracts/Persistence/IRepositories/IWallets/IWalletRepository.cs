@@ -8,5 +8,6 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IWallets
     {
         Task<FilterWalletDto> FilterWallets(FilterWalletDto filter);
         Task SaveChangesAsync();
+        Task<int> GetUserWalletAmountAsync(long userId);
     }
 }

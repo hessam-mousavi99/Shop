@@ -2,6 +2,7 @@
 using Shop.Application.Contracts.Persistence.IRepositories.IWallets;
 using Shop.Application.DTOs.Wallet;
 using Shop.Application.Utils.Paging;
+using Shop.Domain.Enums;
 using Shop.Domain.Models.Wallet;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Generics;
@@ -38,6 +39,16 @@ namespace Shop.Persistence.Repositories.Wallets
         public async Task SaveChangesAsync()
         {
           await _context.SaveChangesAsync();
+        }
+        public async Task<int> GetUserWalletAmountAsync(long userId)
+        {
+            var variz = await _context.Wallets.Where(c => c.UserId == userId && c.WalletType == WalletType.Variz && c.IsPay)
+                .Select(c => c.Amount).ToListAsync();
+
+            var bardasht = await _context.Wallets.Where(c => c.UserId == userId && c.WalletType == WalletType.Bardasht && c.IsPay)
+                .Select(c => c.Amount).ToListAsync();
+
+            return (variz.Sum() - bardasht.Sum());
         }
     }
 }

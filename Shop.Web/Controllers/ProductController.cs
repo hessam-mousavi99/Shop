@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.DTOs.Site;
 using Shop.Application.Extentions;
+using Shop.Application.Features.OrderEntities.Order.Requests.Commands;
 using Shop.Application.Features.Product.Category.Requests.Queries;
 using Shop.Application.Features.Product.Comment.Requests.Commands;
 using Shop.Application.Features.Product.Product.Requests.Queries;
@@ -82,6 +84,17 @@ namespace Shop.Web.Controllers
             TempData[ErrorMessage] = "لطفا نظر خود را وارد نمایید";
             return RedirectToAction("ProductDetail", new { productId = createProductComment.ProductId });
 
+        }
+        #endregion
+
+        #region buy-product
+
+        [Authorize]
+        public async Task<IActionResult> BuyProduct(long productId)
+        {
+            var command=new AddOrderCommandRequest() { ProductId = productId ,UserId=User.GetUserId() };
+            var response=await _mediator.Send(command);
+            return Redirect("/User/Basket/" + response);
         }
         #endregion
     }

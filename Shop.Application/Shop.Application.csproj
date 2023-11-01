@@ -26,6 +26,10 @@
 	<ItemGroup>
 	  <Folder Include="Features\Account\Permissions\Handlers\Commands\" />
 	  <Folder Include="Features\Account\Permissions\Requests\Commands\" />
+	  <Folder Include="Features\OrderEntities\OrderDetail\Handlers\Commands\" />
+	  <Folder Include="Features\OrderEntities\OrderDetail\Handlers\Queries\" />
+	  <Folder Include="Features\OrderEntities\OrderDetail\Requests\Commands\" />
+	  <Folder Include="Features\OrderEntities\OrderDetail\Requests\Queries\" />
 	</ItemGroup>
 
 </Project>

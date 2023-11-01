@@ -5,5 +5,7 @@ namespace Shop.Application.Contracts.Persistence.IRepositories.IOrderEntities
 {
     public interface IOrderDetailRepository : IGenericRepository<OrderDetail>
     {
+        Task<OrderDetail> CheckOrderDetailExistsAsync(long orderId, long productId);
+        Task<int> OrderSumAsync(long orderId);
     }
 }
