@@ -16,5 +16,9 @@ namespace Shop.Web.Controllers
             ViewData["LastProducts"] = await _siteSettingService.LastProducts();
             return View();
         }
+        public IActionResult Error()
+        { 
+            return View();
+        }
     }
 }
