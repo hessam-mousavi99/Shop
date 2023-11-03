@@ -20,7 +20,7 @@ namespace Shop.Persistence.Repositories.OrderEntities
 
         public Task<Order> CheckUserOrderAsync(long userId)
         {
-            return _context.Orders.AsQueryable().FirstOrDefaultAsync(c => c.UserId == userId && !c.IsFinaly);
+            return _context.Orders.AsQueryable().OrderByDescending(c=>c.Id).Take(1).FirstOrDefaultAsync(c => c.UserId == userId &&c.OrderState==OrderState.Processing && !c.IsFinaly);
         }
 
         public async Task<Order> GetUserBasketAsync(long orderId, long userId)
@@ -78,6 +78,22 @@ namespace Shop.Persistence.Repositories.OrderEntities
 
         }
 
-        
+        public async Task<Order> GetUserBasketAsync(long userId)
+        {
+            return await _context.Orders.AsQueryable()
+               .Include(c => c.User)
+               .Where(c => c.UserId == userId && c.IsFinaly==false)
+               .Select(c => new Order
+               {
+                   UserId = c.UserId,
+                   CreateDate = c.CreateDate,
+                   Id = c.Id,
+                   IsDelete = c.IsDelete,
+                   OrderState = c.OrderState,
+                   IsFinaly = c.IsFinaly,
+                   OrderSum = c.OrderSum,
+                   OrderDetails = _context.OrderDetails.Where(c => !c.Order.IsFinaly && c.Order.UserId == userId).Include(c => c.Product).ToList()
+               }).FirstOrDefaultAsync();
+        }
     }
 }

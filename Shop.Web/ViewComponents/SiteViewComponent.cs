@@ -2,10 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Contracts.Infrastructure.IServices;
-using Shop.Application.Contracts.Persistence.IRepositories.IProductEntities;
 using Shop.Application.DTOs.Admin.Product;
 using Shop.Application.DTOs.Admin.SiteSetting.Slider;
+using Shop.Application.Extentions;
 using Shop.Application.Features.Account.Users.Requests.Queries;
+using Shop.Application.Features.OrderEntities.Order.Requests.Queries;
 using Shop.Application.Features.Product.Category.Requests.Queries;
 using Shop.Application.Features.Product.Comment.Requests.Queries;
 using Shop.Domain.Models.Account;
@@ -30,8 +31,9 @@ namespace Shop.Web.ViewComponents
             {
                 var user = await _mediator.Send(new GetUserByPhoneNumRequest() { PhoneNumber = User.Identity.Name });
                 var map = _mapper.Map<User>(user);
+                
                 ViewBag.User = map;
-
+                ViewBag.Order = await _mediator.Send(new GetUserBasketByUserIdRequest() { UserId = User.GetUserId() });
             }
             return View("SiteHeader");
         }
@@ -120,6 +122,7 @@ namespace Shop.Web.ViewComponents
         }
     }
     #endregion
+
     #region  AllProductInCategoryWomen
     public class AllProductInCategoryWomenViewComponent : ViewComponent
     {
@@ -136,6 +139,7 @@ namespace Shop.Web.ViewComponents
         }
     }
     #endregion
+
     #region  AllProductInCategoryMen
     public class AllProductInCategoryMenViewComponent : ViewComponent
     {

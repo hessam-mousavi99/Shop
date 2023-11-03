@@ -1,9 +1,11 @@
 ﻿@using Shop.Application.DTOs.Accounts
 @using Shop.Application.Extentions
+@using Shop.Application.Utils;
 @using Shop.Domain.Models.Account
+@using Shop.Domain.Models.OrderEntities;
 @{
     var user = (User)ViewBag.User;
-    //var orderid = (long)ViewBag.OrderId;
+    var order = (Order)ViewBag.Order;
 }
 
 <header class="header header-6">
@@ -65,7 +67,7 @@
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                     <form asp-area="" asp-controller="Product" asp-action="Products" method="get">
                         <div class="header-search-wrapper search-wrapper-wide">
-                           
+
                             <a class="btn btn-primary" type="submit"><i class="icon-search"></i></a>
                             <input type="search" class="form-control mr-4" name="ProductName" id="q"
                                    placeholder="جستجوی محصول ..." required>
@@ -78,97 +80,92 @@
                     <img src="/images/demos/demo-6/logo.png" alt="Molla Logo" width="82" height="20">
                 </a>
             </div><!-- End .header-left -->
-
-            <div class="header-right">
-                <a href="wishlist.html" class="wishlist-link">
-                    <i class="icon-heart-o"></i>
-                    <span class="wishlist-count">3</span>
-                    <span class="wishlist-txt">علاقه مندی</span>
-                </a>
-
-                <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <i class="icon-shopping-cart"></i>
-                        <span class="cart-count">2</span>
-                        <span class="cart-txt">164,000 تومان</span>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="header-right">
+                    <a href="wishlist.html" class="wishlist-link">
+                        <i class="icon-heart-o"></i>
+                        <span class="wishlist-count">3</span>
+                        <span class="wishlist-txt">علاقه مندی</span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-cart-products">
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">کتونی ورزشی مخصوص دویدن رنگ بژ</a>
-                                    </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1 x </span>
-                                        84,000 تومان
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/images/products/cart/product-1.jpg" alt="محصول">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">لباس زنانه آبی</a>
-                                    </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1 x </span>
-                                        76,000 تومان
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/images/products/cart/product-2.jpg" alt="محصول">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-                        </div><!-- End .cart-product -->
-
-                        <div class="dropdown-cart-total">
-                            <span>مجموع</span>
-
-                            <span class="cart-total-price">160,000 تومان</span>
-                        </div><!-- End .dropdown-cart-total -->
-
-                        <div class="dropdown-cart-action">
-                            <a href="#" class="btn btn-primary">مشاهده سبد خرید</a>
-                            <a href="checkout.html" class="btn btn-outline-primary-2">
-                                <span>پرداخت</span><i class="icon-long-arrow-left"></i>
+                    <div class="dropdown cart-dropdown">
+                        @if (order != null)
+                        {
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <div class="icon">
+                                    <i class="icon-shopping-cart"></i>
+                                </div>
+                                <h6>سبد خرید</h6>
                             </a>
-                        </div><!-- End .dropdown-cart-total -->
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .cart-dropdown -->
-            </div>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    @if (order.OrderDetails != null && order.OrderDetails.Any())
+                                    {
+                                        @foreach (var item in order.OrderDetails)
+                                        {
+
+                                            <div class="product">
+                                                <div class="product-cart-details">
+                                                    <h4 class="product-title">
+                                                        <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id">@item.Product.Name</a>
+                                                    </h4>
+
+                                                    <span class="cart-product-info">
+                                                        <span class="cart-product-qty">@item.Count * </span>
+                                                        @{
+                                                            var price = (item.Count * item.Price);
+                                                        }
+                                                        @price.ToString("#,0 تومان")
+                                                    </span>
+                                                </div>
+
+                                                <figure class="product-image-container">
+                                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id" class="product-image">
+                                                        <img src="@(PathExtensions.ProductOrgin +item.Product.ProductImageName)" alt="@item.Product.Name">
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <div class="dropdown-cart-total">
+                                    <span>مجموع</span>
+
+                                    <span class="cart-total-price">@order.OrderSum.ToString("#,0 تومان")</span>
+                                </div>
+
+                                <div class="dropdown-cart-action">
+                                    <a asp-area="User" asp-controller="Account" asp-action="UserBasket" asp-route-orderId="@order.Id" class="btn btn-outline-primary-2">
+                                        <span>مشاهده سبد خرید</span><i class="icon-long-arrow-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div><!-- End .cart-dropdown -->
+                </div>
+
+            }
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
     <div class="header-bottom sticky-header">
         <div class="container">
-                @await Component.InvokeAsync("NavbarCategory")
+            @await Component.InvokeAsync("NavbarCategory")
 
-                <nav class="main-nav">
-                    <ul class="menu sf-arrows">
-                        <li class="megamenu-container active">
-                            <a href="/">خانه</a>
-                        </li>
-                        <li class="megamenu-container">
-                            <a asp-area="" asp-controller="Product" asp-action="Products">محصولات</a>
-                        </li>
-                    </ul><!-- End .menu -->
-                </nav><!-- End .main-nav -->
-         
+            <nav class="main-nav">
+                <ul class="menu sf-arrows">
+                    <li class="megamenu-container active">
+                        <a href="/">خانه</a>
+                    </li>
+                    <li class="megamenu-container">
+                        <a asp-area="" asp-controller="Product" asp-action="Products">محصولات</a>
+                    </li>
+                </ul><!-- End .menu -->
+            </nav><!-- End .main-nav -->
+
         </div><!-- End .container -->
     </div><!-- End .header-bottom -->
 </header>

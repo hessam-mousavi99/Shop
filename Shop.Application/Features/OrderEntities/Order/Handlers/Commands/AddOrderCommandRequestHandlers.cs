@@ -25,7 +25,7 @@ namespace Shop.Application.Features.OrderEntities.Order.Handlers.Commands
             var product = await _productRepository.GetAsync(request.ProductId);
             var order = await _orderRepository.CheckUserOrderAsync(request.UserId);
 
-            if (order.IsFinaly)
+            if (order==null)
             {
                 order = new Domain.Models.OrderEntities.Order()
                 {
