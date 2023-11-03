@@ -1,2 +1,5 @@
 # Shop
-Sample Shop with Asp.net Core
+Sample Shop 
+
+Solid Asp.net Core Programming
+Using MediatR-CQRS-EfCore-Repositories And ...
