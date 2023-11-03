@@ -41,6 +41,8 @@ namespace Shop.Infrastructure
             services.AddScoped<IProductCommentRepository, ProductCommentRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<IUserFavoriteRepository, UserFavoriteRepository>();
+            services.AddScoped<IUserCompareRepository, UserCompareRepository>();
             #endregion
         }
     }

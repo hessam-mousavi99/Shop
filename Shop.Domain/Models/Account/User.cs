@@ -47,6 +47,8 @@ namespace Shop.Domain.Models.Account
         public virtual ICollection<UserRole>? UserRoles { get; set; }
         public virtual ICollection<ProductComment>? ProductComments { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
+        public virtual ICollection<UserCompare>? UserCompares { get; set; }
+        public virtual ICollection<UserFavorite>? UserFavorites { get; set; }
 
         #endregion
     }

@@ -17,6 +17,8 @@ namespace Shop.Persistence.Context
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserCompare> UserCompares { get; set; }
+        public DbSet<UserFavorite> UserFavorites { get; set; }
         #endregion
 
         #region Wallet

@@ -16,6 +16,8 @@ namespace Shop.Persistence.ModelConfigs.Account
             builder.HasMany<UserRole>(g => g.UserRoles).WithOne(s => s.User).HasForeignKey(s => s.UserId);
             builder.HasMany<ProductComment>(x => x.ProductComments).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             builder.HasMany<Order>(x => x.Orders).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            builder.HasMany<UserCompare>(x => x.UserCompares).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            builder.HasMany<UserFavorite>(x => x.UserFavorites).WithOne(x => x.User).HasForeignKey(x => x.UserId);
         }
     }
 }
