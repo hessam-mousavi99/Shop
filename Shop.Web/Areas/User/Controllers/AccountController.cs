@@ -9,10 +9,12 @@ using Shop.Application.Features.Account.Users.Requests.Commands;
 using Shop.Application.Features.Account.Users.Requests.Queries;
 using Shop.Application.Features.OrderEntities.Order.Requests.Commands;
 using Shop.Application.Features.OrderEntities.Order.Requests.Queries;
+using Shop.Application.Features.OrderEntities.OrderDetail.Requests.Commands;
 using Shop.Application.Features.Wallet.Requests.Commands;
 using Shop.Application.Features.Wallet.Requests.Queries;
 using Shop.Domain.Enums;
 using Shop.Domain.Models.Account;
+using Shop.Web.Extentions;
 using Shop.Web.Models.VM.Account;
 using Shop.Web.Models.VM.Wallet;
 using ZarinpalSandbox;
@@ -199,9 +201,9 @@ namespace Shop.Web.Areas.User.Controllers
         {
             var Final = _mapper.Map<FinalyOrderDto>(finallyOrder);
             if (Final.IsWallet)
-            { 
+            {
                 var command = new FinallyOrderCommandRequest() { FinalyOrderDto = Final, UserId = User.GetUserId() };
-                var response=await _mediator.Send(command);
+                var response = await _mediator.Send(command);
                 switch (response)
                 {
                     case FinallyOrderResult.HasNotUser:
@@ -245,6 +247,7 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
+
         #region order payment
         [HttpGet("online-order/{id}")]
         public async Task<IActionResult> OrderPayment(long id)
@@ -252,7 +255,7 @@ namespace Shop.Web.Areas.User.Controllers
             if (HttpContext.Request.Query["Status"] != "" && HttpContext.Request.Query["Status"].ToString().ToLower() == "ok" && HttpContext.Request.Query["Authority"] != "")
             {
                 string authority = HttpContext.Request.Query["Authority"];
-                var order = await _mediator.Send(new GetOrderRequest() { OrderId=id});
+                var order = await _mediator.Send(new GetOrderRequest() { OrderId = id });
                 if (order != null)
                 {
                     var payment = new Payment(order.OrderSum);
@@ -273,7 +276,39 @@ namespace Shop.Web.Areas.User.Controllers
         }
         #endregion
 
+        #region user-orders
+        [HttpGet("user-orders")]
+        public async Task<IActionResult> UserOrders(FilterOrdersVM filterOrdersVM)
+        {
+            filterOrdersVM.UserId = User.GetUserId();
+            var filter = _mapper.Map<FilterOrdersDto>(filterOrdersVM);
+            var response = await _mediator.Send(new FilterOrdersRequest() { FilterOrdersDto = filter });
+            return View(_mapper.Map<FilterOrdersVM>(response));
+        }
+        #endregion
 
+        #region reload-price
+        [HttpGet("reload-price")]
+        public async Task<IActionResult> ReloadOrderPrice(long id)
+        {
+            var order = await _mediator.Send(new GetUserBasketRequest() { OrderId = id, UserId = User.GetUserId() });
+            ViewBag.UserWalletAmount = await _mediator.Send(new GetUserWalletAmountRequest() { UserId = User.GetUserId() });
+            return PartialView("_OrderPrice", order);
+        }
+        #endregion
 
+        #region delete-order-detail
+        [HttpGet("delete-orderDetail/{orderDetailId}")]
+        public async Task<IActionResult> DeleteOrderDetail(long orderDetailId)
+        {
+            var command = new RemoveOrderDetailFromOrderCommandRequest() { OrderDetailId= orderDetailId };
+            var response=await _mediator.Send(command);
+            if (response)
+            {
+                return JsonResponseStatus.Success();
+            }
+            return JsonResponseStatus.Error();
+        }
+        #endregion
     }
 }

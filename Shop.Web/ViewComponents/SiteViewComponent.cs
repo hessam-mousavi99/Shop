@@ -59,8 +59,10 @@ namespace Shop.Web.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var filterslider=new FilterSlidersDto();
-            filterslider.TakeEntity = 5;
+            var filterslider = new FilterSlidersDto
+            {
+                TakeEntity = 5
+            };
             var data = await _siteSettingService.FilterSliders(filterslider);
             return View("SiteSlider",data);
         }

@@ -149,4 +149,17 @@ namespace Shop.Domain.Enums
         [Display(Name = "لغو شده")]
         Cancel
     }
+    public enum OrderStateFilter
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "درخواست شده")]
+        Requested,
+        [Display(Name = "در حال بررسی")]
+        Processing,
+        [Display(Name = "ارسال شده")]
+        Sent,
+        [Display(Name = "لغو شده")]
+        Cancel
+    }
 }

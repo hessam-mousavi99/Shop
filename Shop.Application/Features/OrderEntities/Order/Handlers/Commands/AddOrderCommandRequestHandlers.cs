@@ -25,7 +25,7 @@ namespace Shop.Application.Features.OrderEntities.Order.Handlers.Commands
             var product = await _productRepository.GetAsync(request.ProductId);
             var order = await _orderRepository.CheckUserOrderAsync(request.UserId);
 
-            if (order == null)
+            if (order.IsFinaly)
             {
                 order = new Domain.Models.OrderEntities.Order()
                 {
@@ -33,9 +33,9 @@ namespace Shop.Application.Features.OrderEntities.Order.Handlers.Commands
                     IsFinaly = false,
                     OrderState = Domain.Enums.OrderState.Processing,
                     OrderSum = product.Price,
-                    OrderDetails = new List<OrderDetail>()
+                    OrderDetails = new List<Shop.Domain.Models.OrderEntities.OrderDetail>()
                     {
-                        new OrderDetail()
+                        new Shop.Domain.Models.OrderEntities.OrderDetail()
                         {
                             Price = product.Price,
                             ProductId = request.ProductId,
@@ -56,7 +56,7 @@ namespace Shop.Application.Features.OrderEntities.Order.Handlers.Commands
                 }
                 else
                 {
-                    detail=new OrderDetail()
+                    detail=new Shop.Domain.Models.OrderEntities.OrderDetail()
                     {
                         Count=1,
                         Price=product.Price,

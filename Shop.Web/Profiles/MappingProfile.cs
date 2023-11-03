@@ -27,6 +27,7 @@ namespace Shop.Web.Profiles
             CreateMap<EditUserProfileDto, EditUserProfileVM>().ReverseMap();
             CreateMap<ChangePasswordDto, ChangePasswordVM>().ReverseMap();
             CreateMap<FinalyOrderDto, FinallyOrderVM>().ReverseMap();
+            CreateMap<FilterOrdersDto, FilterOrdersVM>().ReverseMap();
 
             #endregion
 
