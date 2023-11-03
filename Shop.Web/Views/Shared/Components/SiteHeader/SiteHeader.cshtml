@@ -6,6 +6,8 @@
 @{
     var user = (User)ViewBag.User;
     var order = (Order)ViewBag.Order;
+    var userCopare = (List<UserCompare>)ViewBag.UserCompare;
+    int? favoriteCount =(int)ViewBag.FavoritCount;
 }
 
 <header class="header header-6">
@@ -83,11 +85,58 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="header-right">
-                    <a href="wishlist.html" class="wishlist-link">
-                        <i class="icon-heart-o"></i>
-                        <span class="wishlist-count">3</span>
-                        <span class="wishlist-txt">علاقه مندی</span>
-                    </a>
+
+                    <div class="dropdown compare-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-display="static" title="مقایسه محصولات"
+                           aria-label="Compare Products">
+                            <div class="icon">
+                                <i class="icon-random"></i>
+                            </div>
+                            <p>مقایسه</p>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @if (userCopare != null && userCopare.Any())
+                            {
+                                <ul class="compare-products">
+                                    @foreach (var userCompare in userCopare)
+                                    {
+                                        <li class="compare-product">
+                                            <a asp-area="User" asp-controller="Account" asp-action="RemoveUserCompare" asp-route-id="@userCompare.Id" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
+                                            <h4 class="compare-product-title">
+                                                <a href="product.html">@userCompare.Product.Name</a>
+                                            </h4>
+                                        </li>
+                                    }
+                                </ul>
+
+                                <div class="compare-actions">
+                                    <a asp-area="User" asp-controller="Account" asp-action="RemoveAllUserCompare" class="action-link">حذف همه</a>
+                                    <a asp-area="user" asp-controller="Account" asp-action="UserCompares" class="btn btn-outline-primary-2">
+                                        <span>مقایسه</span><i class="icon-long-arrow-left"></i>
+                                    </a>
+                                </div>
+                            }
+
+                        </div><!-- End .dropdown-menu -->
+                    </div>
+
+                    <div class="wishlist">
+                        <a asp-area="user" asp-controller="Account" asp-action="UserFavorits" title="لیست محصولات مورد علاقه شما">
+                            <div class="icon">
+                                <i class="icon-heart-o"></i>
+                                <span class="wishlist-count badge">
+                                    @if (ViewBag.FavoritCount != null)
+                                    {
+                                        @ViewBag.FavoritCount
+
+                                    }
+                                </span>
+                            </div>
+                            <p>علاقه مندی</p>
+                        </a>
+                    </div><!-- End .compare-dropdown -->
 
                     <div class="dropdown cart-dropdown">
                         @if (order != null)
@@ -169,3 +218,4 @@
         </div><!-- End .container -->
     </div><!-- End .header-bottom -->
 </header>
+

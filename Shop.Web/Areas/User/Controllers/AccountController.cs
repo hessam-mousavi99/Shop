@@ -10,10 +10,11 @@ using Shop.Application.Features.Account.Users.Requests.Queries;
 using Shop.Application.Features.OrderEntities.Order.Requests.Commands;
 using Shop.Application.Features.OrderEntities.Order.Requests.Queries;
 using Shop.Application.Features.OrderEntities.OrderDetail.Requests.Commands;
+using Shop.Application.Features.Product.Product.Requests.Commands;
+using Shop.Application.Features.Product.Product.Requests.Queries;
 using Shop.Application.Features.Wallet.Requests.Commands;
 using Shop.Application.Features.Wallet.Requests.Queries;
 using Shop.Domain.Enums;
-using Shop.Domain.Models.Account;
 using Shop.Web.Extentions;
 using Shop.Web.Models.VM.Account;
 using Shop.Web.Models.VM.Wallet;
@@ -310,5 +311,95 @@ namespace Shop.Web.Areas.User.Controllers
             return JsonResponseStatus.Error();
         }
         #endregion
+
+        #region list-user-favorits
+        [HttpGet("user-favorits")]
+        public async Task<IActionResult> UserFavorits(UserFavoritsVM filter)
+        {
+            var response = await _mediator.Send(new FilterFavoritesRequest() { UserFavoriteDto = _mapper.Map<UserFavoriteDto>(filter) });
+            return View(_mapper.Map<UserFavoritsVM>(response));
+        }
+        #endregion
+
+        #region list-user-compares
+        [HttpGet("user-compares")]
+        public async Task<IActionResult> UserCompares(UserComparesVM filter)
+        {
+            var response = await _mediator.Send(new FilterComparesRequest() { UserCompareDto = _mapper.Map<UserCompareDto>(filter) });
+            return View(_mapper.Map<UserComparesVM>(response));
+        }
+        #endregion
+
+        #region user-favorit
+        [HttpGet("add-favorite/{productId}")]
+        public async Task<IActionResult> AddUserFavorit(long productId)
+        {
+            var command=new AddProductToFavoritCommandRequest() { ProductId= productId ,UserId=User.GetUserId()};
+            var response=await _mediator.Send(command);
+            if (response)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر با موفقیت در قسمت علاقه مندی اضافه شد";
+                return RedirectToAction("UserFavorits");
+            }
+            TempData[WarningMessage] = "محصول مورد نظر قبلا در علاقه مندی اضافه شده است";
+            return RedirectToAction("UserFavorits");
+        }
+        #endregion
+
+        #region user-compatre
+        [HttpGet("add-compare/{productId}")]
+        public async Task<IActionResult> AddUserCompare(long productId)
+        {
+            var command = new AddProductToCompareCommandRequest() { ProductId = productId, UserId = User.GetUserId() };
+            var response = await _mediator.Send(command);
+            if (response)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر با موفقیت در قسمت مقایسه اضافه شد";
+                return RedirectToAction("UserCompares");
+            }
+            TempData[WarningMessage] = "محصول مورد نظر قبلا در مقایسه اضافه شده است";
+            return RedirectToAction("UserCompares");
+        }
+        #endregion
+
+        #region remove-all-userCompare
+        [HttpGet("removeAllUserCompare")]
+        public async Task<IActionResult> RemoveAllUserCompare()
+        {
+           var command =new RemoveAllUserComparesCommandRequest() { UserId= User.GetUserId() };
+           var response=await _mediator.Send(command);
+
+            if (response)
+            {
+                TempData[SuccessMessage] = "تمامی محصولاتی که در لیست مقایسه بود حذف شده";
+                return RedirectToAction("UserCompares");
+
+            }
+
+            TempData[WarningMessage] = "لیست مقایسه شما خالی میباشد";
+            return RedirectToAction("UserCompares");
+
+        }
+        #endregion
+
+        #region remove-userCompare
+        [HttpGet("removeUserCompare")]
+        public async Task<IActionResult> RemoveUserCompare(long id)
+        {
+            var command = new RemoveUserCompareCommandRequest() { Id =id };
+            var response = await _mediator.Send(command);
+
+            if (response)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر که در لیست مقایسه بود حذف شده";
+                return RedirectToAction("UserCompares");
+            }
+
+            TempData[WarningMessage] = "همچین محصولی در لیست مقایسه ی شما وجود ندارد";
+            return RedirectToAction("UserCompares");
+
+        }
+        #endregion
+
     }
 }

@@ -10,6 +10,7 @@ using Shop.Application.Features.OrderEntities.Order.Requests.Queries;
 using Shop.Application.Features.Product.Category.Requests.Queries;
 using Shop.Application.Features.Product.Comment.Requests.Queries;
 using Shop.Domain.Models.Account;
+using Shop.Infrastructure.Services;
 
 namespace Shop.Web.ViewComponents
 {
@@ -34,6 +35,9 @@ namespace Shop.Web.ViewComponents
                 
                 ViewBag.User = map;
                 ViewBag.Order = await _mediator.Send(new GetUserBasketByUserIdRequest() { UserId = User.GetUserId() });
+                ViewBag.UserCompare = await _mediator.Send(new GetUserComparesRequest() { UserId = User.GetUserId() });
+                ViewBag.FavoritCount = await _mediator.Send(new UserFavoritCountRequest() { UserId = User.GetUserId() });
+
             }
             return View("SiteHeader");
         }

@@ -30,6 +30,8 @@ namespace Shop.Web.Profiles
             CreateMap<ChangePasswordDto, ChangePasswordVM>().ReverseMap();
             CreateMap<FinalyOrderDto, FinallyOrderVM>().ReverseMap();
             CreateMap<FilterOrdersDto, FilterOrdersVM>().ReverseMap();
+            CreateMap<UserCompareDto, UserComparesVM>().ReverseMap();
+            CreateMap<UserFavoriteDto, UserFavoritsVM>().ReverseMap();
 
             #endregion
 
