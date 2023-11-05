@@ -19,7 +19,7 @@ namespace Shop.Application.Features.OrderEntities.Order.Handlers.Commands
             if (order == null) { return false; }
 
             order.OrderState=OrderState.Sent;
-            _orderRepository.UpdateAsync(order);
+            await _orderRepository.UpdateAsync(order);
             return true;
         }
     }

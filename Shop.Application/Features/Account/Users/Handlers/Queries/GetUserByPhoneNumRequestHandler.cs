@@ -6,7 +6,7 @@ using Shop.Application.Features.Account.Users.Requests.Queries;
 
 namespace Shop.Application.Features.Account.Users.Handlers.Queries
 {
-    internal class GetUserByPhoneNumRequestHandler : IRequestHandler<GetUserByPhoneNumRequest, UserDto>
+    public class GetUserByPhoneNumRequestHandler : IRequestHandler<GetUserByPhoneNumRequest, UserDto>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
